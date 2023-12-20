@@ -100,6 +100,7 @@ flutter:
     - assets/images/psas.JPG
     - assets/images/sfc.JPG
     - assets/images/sgs.JPG
+    - assets/images/my-location.png
 
 
   # To add assets to your application, add an assets section, like this:

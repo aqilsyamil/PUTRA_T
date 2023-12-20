@@ -49,9 +49,13 @@ class BusStop extends StatelessWidget {
             checkUserize();
             onBusStopSelect();
           },
-          leading: IconButton(
-            icon: Icon(Icons.info_outline),
-            onPressed: () => _showFullScreenImage(context, imagePath),
+          leading: Padding(
+            padding: EdgeInsets.only(right: 0.0), // Reduce padding to bring text closer to the icon
+            child: IconButton(
+              icon: Icon(Icons.image),
+              iconSize: 24, // Smaller icon size
+              onPressed: () => _showFullScreenImage(context, imagePath),
+            ),
           ),
           title: Text(
             name,
