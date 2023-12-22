@@ -29,9 +29,9 @@ class _BusStopPageState extends State<BusStopPage> {
   bool isSearching = false;
 
   final Map<String, String> busStopImages = {
-    'PFC': 'assets/images/academy.JPG',
-    'KTAG': 'assets/images/asper.JPG',
-    'SFC': 'assets/images/banquet.JPG',
+    'PFC': 'assets/images/pfc.JPG',
+    'KTAG': 'assets/images/ktag.JPG',
+    'SFC': 'assets/images/sfc.JPG',
     'Central': 'assets/images/central.JPG',
     'FBMK': 'assets/images/fbmk.JPG',
     'FBSB': 'assets/images/fbsb.JPG',
@@ -44,10 +44,14 @@ class _BusStopPageState extends State<BusStopPage> {
     'IBS': 'assets/images/ibs.JPG',
     'INSPEM': 'assets/images/inspem.JPG',
     'K10': 'assets/images/k10.JPG',
-    'K14': 'assets/images/k14.JPG',
+    'K14': 'assets/images/k14.jpg',
     'KMB': 'assets/images/kmb.JPG',
     'PSAS': 'assets/images/psas.JPG',
     'SGS': 'assets/images/sgs.JPG',
+    'Banquet': 'assets/images/banquet.JPG',
+    'ASPer': 'assets/images/asper.jpg',
+    'KAA': 'assets/images/kaa.JPG',
+    'Academy': 'assets/images/academy.jpg',
   };
 
 
@@ -198,7 +202,7 @@ class _BusStopPageState extends State<BusStopPage> {
               itemBuilder: (context, index) {
                 String busStopName = filteredBusStops[index]['name']!;
                 String busStopShortName = filteredBusStops[index]['shortName']!;
-                bool isStarred = widget.starredBusStops.contains('$busStopName | $busStopShortName');
+                bool isStarred = widget.starredBusStops.contains('$busStopName|$busStopShortName');
                 String imagePath = busStopImages[busStopShortName] ?? 'assets/images/default.jpg';
 
                 return BusStop(
@@ -208,9 +212,9 @@ class _BusStopPageState extends State<BusStopPage> {
                   onStarPressed: () {
                     setState(() {
                       if (isStarred) {
-                        widget.removeFromStarred('$busStopName | $busStopShortName');
+                        widget.removeFromStarred('$busStopName|$busStopShortName');
                       } else {
-                        widget.addToStarred('$busStopName | $busStopShortName');
+                        widget.addToStarred('$busStopName|$busStopShortName');
                       }
                     });
                   },

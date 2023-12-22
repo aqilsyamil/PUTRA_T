@@ -52,7 +52,7 @@ class BusStop extends StatelessWidget {
           leading: Padding(
             padding: EdgeInsets.only(right: 0.0), // Reduce padding to bring text closer to the icon
             child: IconButton(
-              icon: Icon(Icons.image),
+              icon: Icon(Icons.info_outline),
               iconSize: 24, // Smaller icon size
               onPressed: () => _showFullScreenImage(context, imagePath),
             ),

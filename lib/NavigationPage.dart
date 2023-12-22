@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'SidebarPage.dart';
 
 class NavigationPage extends StatefulWidget {
 
@@ -14,6 +15,8 @@ class NavigationPage extends StatefulWidget {
 class NavigationPageState extends State<NavigationPage> {
   TextEditingController startLocationController = TextEditingController();
   TextEditingController endLocationController = TextEditingController();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -34,6 +37,7 @@ class NavigationPageState extends State<NavigationPage> {
     setEndLocation(widget.endLocation);
 
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         leading: IconButton(
@@ -58,11 +62,12 @@ class NavigationPageState extends State<NavigationPage> {
           IconButton(
             icon: Icon(Icons.menu, color: Colors.white), // Hamburger icon
             onPressed: () {
-              // Handle hamburger menu button press
+              _scaffoldKey.currentState?.openDrawer();
             },
           ),
         ],// Set the background color of the AppBar
       ),
+      drawer: SidebarPage(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

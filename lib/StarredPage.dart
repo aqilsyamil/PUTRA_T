@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
+import 'BusStop.dart';
+import 'SidebarPage.dart';
 
-// class StarredPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//       ),
-//       body: Center(
-//         child: Text('Starred Page'),
-//       ),
-//     );
-//   }
-// }
 class StarredPage extends StatelessWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey;
   final List<String> starredBusStops;
   final Function(String) removeFromStarred;
+  final Map<String, String> busStopImages;
 
   StarredPage({
+    required this.scaffoldKey,
     required this.starredBusStops,
     required this.removeFromStarred,
+    required this.busStopImages,
   });
 
   @override
@@ -26,62 +20,53 @@ class StarredPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Image.asset('assets/images/p_logo.png'),// Use your own asset image
+          icon: Image.asset('assets/images/p_logo.png'),
           iconSize: 40,
           onPressed: () {
             // Handle icon button press
           },
         ),
-        titleSpacing: 0.0, // This removes the default spacing on the left of the title
-        centerTitle: false,
-        title: Text(
-          'Starred',
-          style: TextStyle(
-            color: Colors.white, // Set the title font color to white
-            fontWeight: FontWeight.w600, // Set the title font weight to bold
-          ),
-          textAlign: TextAlign.left,
+        titleSpacing: 0,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Starred',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+            ),
+          ],
         ),
         backgroundColor: Color(0xFF00D161),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.menu, color: Colors.white), // Hamburger icon
-            onPressed: () {
-              // Handle hamburger menu button press
-            },
+            icon: Icon(Icons.menu, color: Colors.white),
+            onPressed: () => scaffoldKey.currentState?.openDrawer(),
           ),
-        ],// Set the background color of the AppBar
+        ],
       ),
+      drawer: SidebarPage(),
       body: ListView.builder(
         itemCount: starredBusStops.length,
         itemBuilder: (context, index) {
           String starredBusStop = starredBusStops[index];
-
-          // Split the combined string into name and shortName
           List<String> parts = starredBusStop.split('|');
           String busStopName = parts[0];
           String busStopShortName = parts[1];
+          bool isStarred = true; // You may modify this based on your logic for starred bus stops
+          String imagePath = busStopImages[busStopShortName] ?? 'assets/images/default.jpg';
 
-          return Column(
-            children: [
-              ListTile(
-                title: Text(
-                  busStopName,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(busStopShortName),
-                trailing: IconButton(
-                  icon: Icon(Icons.star, color: Colors.orange),
-                  onPressed: () {
-                    removeFromStarred(starredBusStop);
-                  },
-                ),
-              ),
-              Divider(
-                color: Colors.grey,
-                thickness: 0.5, // Set the thickness of the divider
-              ),
-            ],
+          return BusStop(
+            name: busStopName,
+            shortName: busStopShortName,
+            isStarred: isStarred,
+            onStarPressed: () => removeFromStarred(starredBusStop),
+            onSelect: () {
+              // Optional: Add any action you want to perform on bus stop selection
+            },
+            imagePath: imagePath,
+            updateEndLocation: (String location) {
+              // Optional: Handle updating end location if needed
+            },
           );
         },
       ),

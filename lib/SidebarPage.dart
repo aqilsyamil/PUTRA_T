@@ -45,20 +45,22 @@ class SidebarPage extends StatelessWidget {
           }),
           _divider(), // Divider below Settings
 
-          // Adding a button with white background and specified green outline
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: OutlinedButton(
-              onPressed: () {
-                // Define what happens when the button is pressed
-              },
-              child: Text(
-                'Driver Mode',
-                style: TextStyle(color: Color(0xFF00D161)), // Text color specified green
-              ),
-              style: OutlinedButton.styleFrom(
-                backgroundColor: Colors.white, // Button background color white
-                side: BorderSide(color: Color(0xFF00D161), width: 2.0), // Specified green border
+            child: Container(
+              width: 10, // Set a specific width for the button
+              child: OutlinedButton(
+                onPressed: () {
+                  // Define what happens when the button is pressed
+                },
+                child: Text(
+                  'Driver Mode',
+                  style: TextStyle(color: Color(0xFF00D161)),
+                ),
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  side: BorderSide(color: Color(0xFF00D161), width: 2.0),
+                ),
               ),
             ),
           ),

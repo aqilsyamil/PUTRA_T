@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'SidebarPage.dart';
 
 class MessagesPage extends StatelessWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  MessagesPage({required this.scaffoldKey});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +30,11 @@ class MessagesPage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.menu, color: Colors.white),
-            onPressed: () {},
+            onPressed: () => scaffoldKey.currentState?.openDrawer(), // Open drawer
           ),
         ],
       ),
+      drawer: SidebarPage(),
       body: ListView(
         children: [
           messageTile(

@@ -4,6 +4,7 @@ import 'BusRoutePage.dart';
 import 'NavigationPage.dart';
 import 'StarredPage.dart';
 import 'MessagesPage.dart';
+import 'SidebarPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,6 +30,34 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> _starredBusStops = []; // Make it private
   GlobalKey<NavigationPageState> navigationPageKey = GlobalKey();
   String endLocation = "";
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final Map<String, String> busStopImages = {
+    'PFC': 'assets/images/pfc.JPG',
+    'KTAG': 'assets/images/ktag.JPG',
+    'SFC': 'assets/images/sfc.JPG',
+    'Central': 'assets/images/central.JPG',
+    'FBMK': 'assets/images/fbmk.JPG',
+    'FBSB': 'assets/images/fbsb.JPG',
+    'FP': 'assets/images/fp.JPG',
+    'FPC': 'assets/images/fpc.JPG',
+    'FRSB': 'assets/images/frsb.JPG',
+    'FS': 'assets/images/fs.JPG',
+    'FSKTM': 'assets/images/fsktm.JPG',
+    'FSTM': 'assets/images/fstm.JPG',
+    'IBS': 'assets/images/ibs.JPG',
+    'INSPEM': 'assets/images/inspem.JPG',
+    'K10': 'assets/images/k10.JPG',
+    'K14': 'assets/images/k14.jpg',
+    'KMB': 'assets/images/kmb.JPG',
+    'PSAS': 'assets/images/psas.JPG',
+    'SGS': 'assets/images/sgs.JPG',
+    'Banquet': 'assets/images/banquet.JPG',
+    'ASPer': 'assets/images/asper.jpg',
+    'KAA': 'assets/images/kaa.JPG',
+    'Academy': 'assets/images/academy.jpg',
+  };
+
 
 
   void addToStarredBusStops(String busStop) {
@@ -62,27 +91,32 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _currentIndex == 0
-          ? BusStopPage(
-        starredBusStops: _starredBusStops,
-        addToStarred: addToStarredBusStops,
-        removeFromStarred: removeFromStarredBusStops,
-        onBusStopSelected: onBusStopSelected,
-        updateEndLocation: updateEndLocation,
-      )
-          : _currentIndex == 1
-          ? BusRoutePage()
-          : _currentIndex == 2
-          ? NavigationPage(
-        key: navigationPageKey,
-        endLocation: endLocation,
-      )
-          : _currentIndex == 3
-          ? StarredPage(
-        starredBusStops: _starredBusStops,
-        removeFromStarred: removeFromStarredBusStops,
-      )
-          : MessagesPage(),
+      key: _scaffoldKey,
+      drawer: SidebarPage(),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: <Widget>[
+          BusStopPage(
+            starredBusStops: _starredBusStops,
+            addToStarred: addToStarredBusStops,
+            removeFromStarred: removeFromStarredBusStops,
+            onBusStopSelected: onBusStopSelected,
+            updateEndLocation: updateEndLocation,
+          ),
+          BusRoutePage(),
+          NavigationPage(
+            key: navigationPageKey,
+            endLocation: endLocation,
+          ),
+          StarredPage(
+            starredBusStops: _starredBusStops,
+            removeFromStarred: removeFromStarredBusStops,
+            scaffoldKey: _scaffoldKey,
+            busStopImages: busStopImages,
+          ),
+          MessagesPage(scaffoldKey: _scaffoldKey),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -103,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Icons.directions_bus,
               color: _currentIndex == 1 ? Colors.black : Colors.grey,
             ),
-            label: 'Bus Routes',
+            label: 'Routes',
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -128,7 +162,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         selectedItemColor: Colors.black, // Color when selected
-        unselectedItemColor: Colors.grey, // Color when not selected
+        unselectedItemColor: Colors.grey,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,// Color when not selected
       ),
     );
   }

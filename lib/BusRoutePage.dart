@@ -4,6 +4,7 @@ import 'SidebarPage.dart';
 import 'model/User.dart';
 import 'package:geolocator/geolocator.dart';
 
+
 class BusStop {
   final String id;
   final String name;
@@ -1193,6 +1194,7 @@ class _BusRoutePage extends State<BusRoutePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset('assets/images/p_logo.png'),// Use your own asset image
