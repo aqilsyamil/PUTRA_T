@@ -22,7 +22,7 @@ class BusStop extends StatelessWidget {
     required this.updateEndLocation,
   });
   User userize = User(
-      userID: "HELLO"
+      id: "HELLO"
   );
 
   void checkUserize () async {

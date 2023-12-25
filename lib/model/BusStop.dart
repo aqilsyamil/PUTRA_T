@@ -4,7 +4,7 @@ class BusStop {
   String _id;
   String _fullName;
   String _shortName;
-  LatLng _position;
+  LatLng _coordinate;
   String _imagePath;
 
   // Constructor
@@ -12,12 +12,12 @@ class BusStop {
     required String id,
     required String fullName,
     required String shortName,
-    required LatLng position,
+    required LatLng coordinate,
     String imagePath = 'assets/images/default.jpg',
   })  : _id = id,
         _fullName = fullName,
         _shortName = shortName,
-        _position = position,
+        _coordinate = coordinate,
         _imagePath = imagePath;
 
   // Getters
@@ -27,15 +27,15 @@ class BusStop {
 
   String get shortName => _shortName;
 
-  LatLng get position => _position;
+  LatLng get coordinate => _coordinate;
 
-  bool checkImagePathExist(String imagePath) {
+  bool _checkImagePathExist(String imagePath) {
     File imageFile = File(imagePath);
     return imageFile.existsSync();
   }
 
   String get imagePath {
-    if (!checkImagePathExist(imagePath)) {
+    if (!_checkImagePathExist(imagePath)) {
        return 'assets/images/default.jpg';
     }
 
@@ -55,14 +55,14 @@ class BusStop {
     _shortName = value;
   }
 
-  set position(LatLng value) {
-    _position = value;
+  set coordinate(LatLng value) {
+    _coordinate = value;
   }
 
   set imagePath(String value) {
     _imagePath = value;
 
-    if (!checkImagePathExist(_imagePath)) {
+    if (!_checkImagePathExist(_imagePath)) {
       _imagePath = 'assets/images/default.jpg';
     }
   }

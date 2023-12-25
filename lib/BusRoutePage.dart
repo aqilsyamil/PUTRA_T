@@ -970,7 +970,7 @@ class _BusRoutePage extends State<BusRoutePage> {
   int _selectedRoute = 1;
   late GoogleMapController _googleMapController;
 
-  User user = User(userID: "001");
+  User user = User(id: "001");
 
   @override
   void initState() {

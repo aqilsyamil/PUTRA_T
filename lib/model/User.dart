@@ -2,38 +2,38 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class User {
-  String _userID;
-  LatLng _userLocation;
+  String _id;
+  LatLng _coordinate;
 
   User({
-    required String userID,
-    LatLng userLocation = const LatLng(0,0)
+    required String id,
+    LatLng coordinate = const LatLng(0,0)
   })
-      : _userID = userID,
-        _userLocation = userLocation;
+      : _id = id,
+        _coordinate = coordinate;
 
   // Getter for userID
-  String get userID => _userID;
+  String get id => _id;
 
   // Setter for userID
-  set userID(String newUserID) {
-    _userID = newUserID;
+  set id(String id) {
+    _id = id;
   }
 
   // Getter for userLocation
   LatLng get userLocation {
     // updateUserLocation();
-    return _userLocation;
+    return _coordinate;
   }
 
   // Setter for userLocation
   set userLocation(LatLng newUserLocation) {
-    _userLocation = newUserLocation;
+    _coordinate = newUserLocation;
   }
 
   void updateUserLocation() async {
     _determinePosition().then((Position position) {
-      _userLocation = LatLng(position.latitude, position.longitude);
+      _coordinate = LatLng(position.latitude, position.longitude);
       // Now you can use _userLocation as a Position object
     });
   }

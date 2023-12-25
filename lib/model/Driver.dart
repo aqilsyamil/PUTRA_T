@@ -1,40 +1,31 @@
+import 'dart:io';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'User.dart';
 
 class Driver extends User {
-  String _driverID;
   String _fullName;
-  String _phoneNo;
   String _password;
-  LatLng _busDriverLocation;
-  String _driverPhoto;
+  String _phoneNo;
+  String _photoPath;
 
   // Constructor
   Driver({
-         required String driverID,
+         required super.id,
          required String fullName,
          required String phoneNo,
          required String password,
-         LatLng busDriverLocation = const LatLng(0,0),
-         required String driverPhoto
+         super.coordinate,
+         required String photoPath
   })
-      : _driverID = driverID,
-        _fullName = fullName,
+      : _fullName = fullName,
         _phoneNo = phoneNo,
         _password = password,
-        _busDriverLocation = busDriverLocation,
-        _driverPhoto = driverPhoto,
-        super(userID: driverID, userLocation: busDriverLocation);
+        _photoPath = photoPath;
 
-  // Getter for userID
-  String get driverID {
-    return super.userID;
-  }
-
-  // Setter for userID
-  set driverID(String driverID) {
-    driverID = super.userID;
+  bool _checkImagePathExist(String imagePath) {
+    File imageFile = File(imagePath);
+    return imageFile.existsSync();
   }
 
   // Getter for full name
@@ -60,22 +51,20 @@ class Driver extends User {
   set password(String value) {
     _password = value;
   }
-
-  // Getter for bus driver location
-  LatLng get busDriverLocation {
-    return super.userLocation;
-  }
-
-  // Setter for bus driver location
-  set busDriverLocation(LatLng busDriverLocation) {
-    _busDriverLocation = busDriverLocation;
-  }
-
   // Getter for driver photo
-  String get driverPhoto => _driverPhoto;
+  String get photoPath {
 
-  // Setter for driver photo
-  set driverPhoto(String value) {
-    _driverPhoto = value;
+    if (!_checkImagePathExist(_photoPath)) {
+      return 'assets/images/default.jpg';
+    }
+
+    return _photoPath;
   }
+    // Setter for driver photo
+    set photoPath(String value) {
+      _photoPath = value;
+      if (!_checkImagePathExist(_photoPath)) {
+        _photoPath = 'assets/images/default.jpg';
+      }
+    }
 }
