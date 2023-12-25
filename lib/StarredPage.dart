@@ -2,18 +2,25 @@ import 'package:flutter/material.dart';
 import 'BusStop.dart';
 import 'SidebarPage.dart';
 
-class StarredPage extends StatelessWidget {
+class StarredPage extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final List<String> starredBusStops;
   final Function(String) removeFromStarred;
   final Map<String, String> busStopImages;
+  final Function(String) updateEndLocation;
 
   StarredPage({
     required this.scaffoldKey,
     required this.starredBusStops,
     required this.removeFromStarred,
     required this.busStopImages,
+    required this.updateEndLocation
   });
+
+  @override
+  _StarredPageState createState() => _StarredPageState();
+}
+class _StarredPageState extends State<StarredPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -40,33 +47,31 @@ class StarredPage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.menu, color: Colors.white),
-            onPressed: () => scaffoldKey.currentState?.openDrawer(),
+            onPressed: () => widget.scaffoldKey.currentState?.openDrawer(),
           ),
         ],
       ),
       drawer: SidebarPage(),
       body: ListView.builder(
-        itemCount: starredBusStops.length,
+        itemCount: widget.starredBusStops.length,
         itemBuilder: (context, index) {
-          String starredBusStop = starredBusStops[index];
+          String starredBusStop = widget.starredBusStops[index];
           List<String> parts = starredBusStop.split('|');
           String busStopName = parts[0];
           String busStopShortName = parts[1];
           bool isStarred = true; // You may modify this based on your logic for starred bus stops
-          String imagePath = busStopImages[busStopShortName] ?? 'assets/images/default.jpg';
+          String imagePath = widget.busStopImages[busStopShortName] ?? 'assets/images/default.jpg';
 
           return BusStop(
             name: busStopName,
             shortName: busStopShortName,
             isStarred: isStarred,
-            onStarPressed: () => removeFromStarred(starredBusStop),
+            onStarPressed: () => widget.removeFromStarred(starredBusStop),
             onSelect: () {
               // Optional: Add any action you want to perform on bus stop selection
             },
             imagePath: imagePath,
-            updateEndLocation: (String location) {
-              // Optional: Handle updating end location if needed
-            },
+            updateEndLocation: widget.updateEndLocation
           );
         },
       ),

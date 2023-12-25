@@ -113,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
             removeFromStarred: removeFromStarredBusStops,
             scaffoldKey: _scaffoldKey,
             busStopImages: busStopImages,
+            updateEndLocation: updateEndLocation
           ),
           MessagesPage(scaffoldKey: _scaffoldKey),
         ],
