@@ -3,28 +3,25 @@ import 'Driver.dart';
 import 'User.dart';
 
 class Bus {
-  String _busID;
+  String _id;
   Driver _driver;
-  User _user;
   String _plateNo;
-  int _busCapacity;
+  int _capacity;
 
   Bus({
-    required String busID,
+    required String id,
     required Driver driver,
-    required User user,
     required String plateNo,
-    required int busCapacity,
-  })   : _busID = busID,
+    required int capacity,
+  })   : _id = id,
         _driver = driver,
-        _user = user,
         _plateNo = plateNo,
-        _busCapacity = busCapacity;
+        _capacity = capacity;
 
-  String get busID => _busID;
+  String get id => _id;
 
-  set busID(String value) {
-    _busID = value;
+  set id(String value) {
+    _id = value;
   }
 
   Driver get driver => _driver;
@@ -33,21 +30,15 @@ class Bus {
     _driver = value;
   }
 
-  User get user => _user;
-
-  set user(User value) {
-    _user = value;
-  }
-
   String get plateNo => _plateNo;
 
   set plateNo(String value) {
     _plateNo = value;
   }
 
-  int get busCapacity => _busCapacity;
+  int get capacity => _capacity;
 
-  set busCapacity(int value) {
-    _busCapacity = value;
+  set capacity(int value) {
+    _capacity = value;
   }
 }
