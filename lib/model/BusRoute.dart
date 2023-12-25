@@ -1,28 +1,46 @@
 import 'Bus.dart';
-import 'RoutePoint.dart';
+import 'RoutePointPath.dart';
 
 class BusRoute {
-  RoutePoint _routePoint;
-  Bus _bus;
+  String _busRouteID;
+  String _busRouteName;
+  List<RoutePointPath> _routePointPaths;
+  List<Bus> _buses;
 
   // Constructor
   BusRoute({
-    required RoutePoint routePoint,
-    required Bus bus,
-  })  : _routePoint = routePoint,
-        _bus = bus;
+    required String busRouteID,
+    required String busRouteName,
+    required List<RoutePointPath> routePointPaths,
+    required List<Bus> buses,
+  })  : _busRouteID = busRouteID,
+        _busRouteName = busRouteName,
+        _routePointPaths = routePointPaths,
+        _buses = buses;
 
   // Getters
-  RoutePoint get routePoint => _routePoint;
+  String get busRouteID => _busRouteID;
 
-  Bus get bus => _bus;
+  String get busRouteName => _busRouteName;
+
+  List<RoutePointPath> get routePointPaths => _routePointPaths;
+
+  List<Bus> get buses => _buses;
 
   // Setters
-  set routePoint(RoutePoint value) {
-    _routePoint = value;
+  set busRouteID(String value) {
+    _busRouteID = value;
   }
 
-  set bus(Bus value) {
-    _bus = value;
+  set busRouteName(String value) {
+    _busRouteName = value;
+  }
+
+  set routePointPaths(List<RoutePointPath> value) {
+    _routePointPaths = value;
+  }
+
+  set buses(List<Bus> value) {
+    _buses = value;
   }
 }
