@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'SidebarPage.dart';
 import 'model/User.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'SidebarPageDriver.dart';
 
 class BusStop {
   final String id;
@@ -13,25 +13,17 @@ class BusStop {
   BusStop({
     required this.id,
     required this.name,
-    required this.position,
+    required this.position
   });
 }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'PUTRA T',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: BusRoutePage(),
-    );
-  }
-
-
 class BusRoutePage extends StatefulWidget {
+  String mainStatus;
+
+  BusRoutePage({
+    required this.mainStatus
+  });
+
   @override
   _BusRoutePage createState() => _BusRoutePage();
 }
@@ -1217,14 +1209,13 @@ class _BusRoutePage extends State<BusRoutePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.menu, color: Colors.white), // Hamburger icon
-            onPressed: () {
-              _scaffoldKey.currentState?.openDrawer();
-            },
+            onPressed: () => _scaffoldKey.currentState?.openDrawer(),
           ),
-        ],// Set the background color of the AppBar
+        ],// Set the background colorx of the AppBar
       ),
-      drawer: SidebarPage(),
-
+      drawer: widget.mainStatus != 'driver' ?
+      SidebarPage(mainStatus: widget.mainStatus) :
+      SidebarPageDriver(mainStatus: widget.mainStatus),
       body: Column(
         children: [
           Expanded(

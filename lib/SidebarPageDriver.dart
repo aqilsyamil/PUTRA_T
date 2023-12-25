@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'SettingPage.dart';
 import 'DriverLoginPage.dart';
+import 'main.dart';
 
-class SidebarPage extends StatefulWidget {
-  final String mainStatus;
+class SidebarPageDriver extends StatefulWidget {
+  String mainStatus;
 
-  SidebarPage({
-    required this.mainStatus
+  SidebarPageDriver({
+  required this.mainStatus
   });
 
   @override
-  _SidebarPageState createState() => _SidebarPageState();
+  _SidebarPageStateDriver createState() => _SidebarPageStateDriver();
 }
 
-class _SidebarPageState extends State<SidebarPage> {
+class _SidebarPageStateDriver extends State<SidebarPageDriver> {
   bool isDriverModeButtonPressed = false;
 
   @override
@@ -107,11 +108,10 @@ class _SidebarPageState extends State<SidebarPage> {
               onTapCancel: () => _updateButtonPressed(false),
               onTap: () {
                 // Navigate to DriverLoginPage when the button is tapped
+                widget.mainStatus = 'user';
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DriverLoginPage(
-                    mainStatus: widget.mainStatus
-                  )),
+                  MaterialPageRoute(builder: (context) => MyHomePage(mainStatus: widget.mainStatus)),
                 );
               },
               child: Container(
@@ -123,7 +123,7 @@ class _SidebarPageState extends State<SidebarPage> {
                 padding: EdgeInsets.symmetric(vertical: 12.0),
                 alignment: Alignment.center,
                 child: Text(
-                  'Driver Mode',
+                  'User Mode',
                   style: TextStyle(
                     color: isDriverModeButtonPressed ? Colors.white : Color(0xFF00D161),
                     fontWeight: FontWeight.bold, // Make text bold

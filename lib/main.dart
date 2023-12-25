@@ -21,6 +21,12 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  String mainStatus;
+
+  MyHomePage({
+    this.mainStatus = 'user'
+  });
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -31,6 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
   GlobalKey<NavigationPageState> navigationPageKey = GlobalKey();
   String endLocation = "";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  String mainStatus = "user";
+
 
   final Map<String, String> busStopImages = {
     'PFC': 'assets/images/pfc.JPG',
@@ -92,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: SidebarPage(),
+      drawer: SidebarPage(mainStatus: mainStatus),
       body: IndexedStack(
         index: _currentIndex,
         children: <Widget>[
@@ -102,20 +110,27 @@ class _MyHomePageState extends State<MyHomePage> {
             removeFromStarred: removeFromStarredBusStops,
             onBusStopSelected: onBusStopSelected,
             updateEndLocation: updateEndLocation,
+            mainStatus: mainStatus
           ),
-          BusRoutePage(),
+          BusRoutePage(
+            mainStatus: mainStatus
+          ),
           NavigationPage(
             key: navigationPageKey,
             endLocation: endLocation,
+            mainStatus: mainStatus
           ),
           StarredPage(
             starredBusStops: _starredBusStops,
             removeFromStarred: removeFromStarredBusStops,
             scaffoldKey: _scaffoldKey,
             busStopImages: busStopImages,
-            updateEndLocation: updateEndLocation
+            updateEndLocation: updateEndLocation,
+            mainStatus: mainStatus
           ),
-          MessagesPage(scaffoldKey: _scaffoldKey),
+          MessagesPage(
+            mainStatus: mainStatus
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

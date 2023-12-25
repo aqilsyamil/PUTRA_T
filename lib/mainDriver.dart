@@ -19,8 +19,12 @@ class MyAppDriver extends StatelessWidget {
 
 class MyHomePageDriver extends StatefulWidget {
   final int initialIndex;
+  String mainStatus;
 
-  MyHomePageDriver({this.initialIndex = 0});
+  MyHomePageDriver({
+    this.initialIndex = 0,
+    this.mainStatus = 'driver'
+  });
 
   @override
   _MyHomePageStateDriver createState() => _MyHomePageStateDriver(initialIndex); // Pass the initialIndex here
@@ -40,9 +44,13 @@ class _MyHomePageStateDriver extends State<MyHomePageDriver> {
       body: IndexedStack(
         index: _currentIndex,
         children: <Widget>[
-          BusRoutePage(),
-          DutyPage(),
-          MessagesPage(scaffoldKey: _scaffoldKey),
+          BusRoutePage(mainStatus: widget.mainStatus),
+          DutyPage(
+            mainStatus: widget.mainStatus
+          ),
+          MessagesPage(
+              mainStatus: widget.mainStatus
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

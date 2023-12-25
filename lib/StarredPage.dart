@@ -8,13 +8,15 @@ class StarredPage extends StatefulWidget {
   final Function(String) removeFromStarred;
   final Map<String, String> busStopImages;
   final Function(String) updateEndLocation;
+  final String mainStatus;
 
   StarredPage({
     required this.scaffoldKey,
     required this.starredBusStops,
     required this.removeFromStarred,
     required this.busStopImages,
-    required this.updateEndLocation
+    required this.updateEndLocation,
+    required this.mainStatus
   });
 
   @override
@@ -51,7 +53,7 @@ class _StarredPageState extends State<StarredPage> {
           ),
         ],
       ),
-      drawer: SidebarPage(),
+      drawer: SidebarPage(mainStatus: widget.mainStatus),
       body: ListView.builder(
         itemCount: widget.starredBusStops.length,
         itemBuilder: (context, index) {

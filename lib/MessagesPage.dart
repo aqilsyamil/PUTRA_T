@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'SidebarPage.dart';
+import 'SidebarPageDriver.dart';
 
-class MessagesPage extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
+class MessagesPage extends StatefulWidget {
+  String mainStatus;
 
-  MessagesPage({required this.scaffoldKey});
+  MessagesPage({
+    required this.mainStatus
+  });
+
+  @override
+  _MessagesPage createState() => _MessagesPage();
+}
+
+class _MessagesPage extends State<MessagesPage> {
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset('assets/images/p_logo.png'),
@@ -30,11 +42,12 @@ class MessagesPage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.menu, color: Colors.white),
-            onPressed: () => scaffoldKey.currentState?.openDrawer(), // Open drawer
+            onPressed: () => _scaffoldKey.currentState?.openDrawer()
+            , // Open drawer
           ),
         ],
       ),
-      drawer: SidebarPage(),
+      drawer: widget.mainStatus != 'driver' ? SidebarPage(mainStatus: widget.mainStatus) : SidebarPageDriver(mainStatus: widget.mainStatus),
       body: ListView(
         children: [
           messageTile(

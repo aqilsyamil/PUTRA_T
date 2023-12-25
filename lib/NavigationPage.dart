@@ -5,8 +5,14 @@ class NavigationPage extends StatefulWidget {
 
   final String initialEndLocation;
   final String endLocation;
+  final String mainStatus;
   // NavigationPage({this.initialEndLocation = ''});
-  NavigationPage({Key? key, this.initialEndLocation = '', this.endLocation = ''}) : super(key: key);
+  NavigationPage({
+    Key? key,
+    this.initialEndLocation = '',
+    this.endLocation = '',
+    required this.mainStatus
+  }) : super(key: key);
 
   @override
   NavigationPageState createState() => NavigationPageState();
@@ -67,7 +73,7 @@ class NavigationPageState extends State<NavigationPage> {
           ),
         ],// Set the background color of the AppBar
       ),
-      drawer: SidebarPage(),
+      drawer: SidebarPage(mainStatus: widget.mainStatus),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

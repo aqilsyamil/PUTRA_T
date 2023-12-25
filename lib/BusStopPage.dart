@@ -7,14 +7,16 @@ class BusStopPage extends StatefulWidget {
   final Function(String) addToStarred;
   final Function(String) removeFromStarred;
   final Function(String, String) onBusStopSelected;
-  final void Function(String) updateEndLocation; // Add this line// New callback for bus stop selection
+  final void Function(String) updateEndLocation;// Add this line// New callback for bus stop selection
+  final String mainStatus;
 
   BusStopPage({
     required this.starredBusStops,
     required this.addToStarred,
     required this.removeFromStarred,
     required this.onBusStopSelected,
-    required this.updateEndLocation, // Add this line// Initialize in constructor
+    required this.updateEndLocation,
+    required this.mainStatus// Add this line// Initialize in constructor
   });
 
   @override
@@ -156,7 +158,7 @@ class _BusStopPageState extends State<BusStopPage> {
           ),
         ],
       ),
-      drawer: SidebarPage(),
+      drawer: SidebarPage(mainStatus: widget.mainStatus),
       body: Column(
         children: [
           Padding(

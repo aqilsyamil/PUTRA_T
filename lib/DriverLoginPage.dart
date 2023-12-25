@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'mainDriver.dart';
 
 class DriverLoginPage extends StatefulWidget {
+  String mainStatus;
+
+  DriverLoginPage({
+    required this.mainStatus
+  });
+
   @override
   _DriverLoginPageState createState() => _DriverLoginPageState();
 }
@@ -141,9 +147,13 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
                 onPressed: isButtonEnabled
                     ? () {
                   // Handle login button press
+                  widget.mainStatus = 'driver';
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => MyHomePageDriver(initialIndex: 1),
+                      builder: (context) => MyHomePageDriver(
+                          initialIndex: 1,
+                          mainStatus: widget.mainStatus
+                      ),
                     ),
                   );
                 }
