@@ -140,7 +140,7 @@ class _MessagesPage extends State<MessagesPage> {
 
   // Method to launch Bus Schedule URL
   Future<void> _launchBusScheduleURL() async {
-    const url = 'https://hep.upm.edu.my/our_core_services/transportation_management/upm_bus_campus_service_schedule-63338';
+    const url = 'https://hep.upm.edu.my/perkhidmatan_utama/seksyen_pengurusan_kenderaan/jadual_perkhidmatan_bas_kampus_upm-63338?L=en';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

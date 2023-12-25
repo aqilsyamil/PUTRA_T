@@ -66,7 +66,7 @@ class _MyHomePageStateDriver extends State<MyHomePageDriver> {
               Icons.directions_bus,
               color: _currentIndex == 0 ? Colors.black : Colors.grey,
             ),
-            label: 'Bus Routes',
+            label: 'Routes',
           ),
           BottomNavigationBarItem(
             icon: Icon(

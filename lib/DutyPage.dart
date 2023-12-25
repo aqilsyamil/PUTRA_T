@@ -30,7 +30,7 @@ class _DutyPage extends State<DutyPage> {
         titleSpacing: 0.0,
         centerTitle: false,
         title: Text(
-          'Messages',
+          'Duty',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w600,
@@ -53,7 +53,7 @@ class _DutyPage extends State<DutyPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Your Duty Information',
+              'Duty Information',
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -62,19 +62,19 @@ class _DutyPage extends State<DutyPage> {
             SizedBox(height: 20.0),
             // Add widgets here to display duty-related information
             Text(
-              'Shift: Morning Shift',
+              'Driver: Ali bin Abu',
               style: TextStyle(
                 fontSize: 18.0,
               ),
             ),
             Text(
-              'Date: January 10, 2023',
+              'Plate No.: BRB6020',
               style: TextStyle(
                 fontSize: 18.0,
               ),
             ),
             Text(
-              'Bus Route: Route 101',
+              'Bus Route: Route 1',
               style: TextStyle(
                 fontSize: 18.0,
               ),
