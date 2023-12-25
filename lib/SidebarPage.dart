@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'SettingPage.dart';
 
-class SidebarPage extends StatelessWidget {
+class SidebarPage extends StatefulWidget {
+  @override
+  _SidebarPageState createState() => _SidebarPageState();
+}
+
+class _SidebarPageState extends State<SidebarPage> {
+  bool isDriverModeButtonPressed = false;
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -38,7 +45,6 @@ class SidebarPage extends StatelessWidget {
           _buildDrawerItem(Icons.map, 'Campus Map', () {
             _showMap(context, 'assets/images/campus-map-north.jpeg', true);
           }),
-          // Virtual Tour Drawer Item
           _buildDrawerItem(Icons.vrpano, 'Virtual Tour', () async {
             const url = 'https://virtualtour.upm.edu.my/';
             if (await canLaunch(url)) {
@@ -50,7 +56,6 @@ class SidebarPage extends StatelessWidget {
           _buildDrawerItem(Icons.directions_bus, 'Transit Map', () {
             _showMap(context, 'assets/images/transit_map.png', false);
           }),
-
           _buildDrawerItem(Icons.access_time, 'Bus Schedule', () async {
             const url = 'https://hep.upm.edu.my/perkhidmatan_utama/seksyen_pengurusan_kenderaan/jadual_perkhidmatan_bas_kampus_upm-63338?L=en';
             if (await canLaunch(url)) {
@@ -85,21 +90,29 @@ class SidebarPage extends StatelessWidget {
             );
           }),
           _divider(),
+
+          SizedBox(height: 40),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Container(
-              width: 10,
-              child: OutlinedButton(
-                onPressed: () {
-                  // Define what happens when the button is pressed
-                },
+            padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 6.0),
+            child: GestureDetector(
+              onTapDown: (_) => _updateButtonPressed(true),
+              onTapUp: (_) => _updateButtonPressed(false),
+              onTapCancel: () => _updateButtonPressed(false),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isDriverModeButtonPressed ? Color(0xFF00D161) : Colors.white,
+                  border: Border.all(color: Color(0xFF00D161), width: 2.0),
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 12.0),
+                alignment: Alignment.center,
                 child: Text(
                   'Driver Mode',
-                  style: TextStyle(color: Color(0xFF00D161)),
-                ),
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  side: BorderSide(color: Color(0xFF00D161), width: 2.0),
+                  style: TextStyle(
+                    color: isDriverModeButtonPressed ? Colors.white : Color(0xFF00D161),
+                    fontWeight: FontWeight.bold, // Make text bold
+                    fontSize: 16, // Increased font size
+                  ),
                 ),
               ),
             ),
@@ -107,6 +120,12 @@ class SidebarPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _updateButtonPressed(bool pressed) {
+    setState(() {
+      isDriverModeButtonPressed = pressed;
+    });
   }
 
   Widget _buildDrawerItem(IconData icon, String title, VoidCallback onTap) {
