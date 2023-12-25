@@ -102,6 +102,8 @@ flutter:
     - assets/images/sgs.JPG
     - assets/images/kaa.JPG
     - assets/images/my-location.png
+    - assets/images/campus-map-south.jpeg
+    - assets/images/campus-map-north.jpeg
 
 
   # To add assets to your application, add an assets section, like this:

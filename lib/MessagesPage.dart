@@ -92,6 +92,7 @@ class MessagesPage extends StatelessWidget {
   void _showTransitMap(BuildContext context) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       barrierColor: Colors.black, // Black and opaque background
       builder: (BuildContext context) {
         return Stack(
@@ -279,6 +280,7 @@ class MessagesPage extends StatelessWidget {
           ),
         ],
       ),
+
     );
   }
 }

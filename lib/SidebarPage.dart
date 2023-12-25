@@ -36,11 +36,12 @@ class SidebarPage extends StatelessWidget {
             }
           }),
           _buildDrawerItem(Icons.map, 'Campus Map', () {
-            _showTransitMap(context, 'assets/images/campus-map-north.jpeg');
+            _showMap(context, 'assets/images/campus-map-north.jpeg', true);
           }),
           _buildDrawerItem(Icons.directions_bus, 'Transit Map', () {
-            _showTransitMap(context, 'assets/images/transit_map.png');
+            _showMap(context, 'assets/images/transit_map.png', false);
           }),
+
           _buildDrawerItem(Icons.access_time, 'Bus Schedule', () async {
             const url = 'https://hep.upm.edu.my/perkhidmatan_utama/seksyen_pengurusan_kenderaan/jadual_perkhidmatan_bas_kampus_upm-63338?L=en';
             if (await canLaunch(url)) {
@@ -114,37 +115,73 @@ class SidebarPage extends StatelessWidget {
     );
   }
 
-  void _showTransitMap(BuildContext context, String imagePath) {
+  void _showMap(BuildContext context, String initialImagePath, bool isCampusMap) {
+    String currentImagePath = initialImagePath;
+
     showGeneralDialog(
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) {
-        return Scaffold(
-          backgroundColor: Colors.black, // Full black background
-          body: Stack(
-            children: <Widget>[
-              Center(
-                child: InteractiveViewer(
-                  panEnabled: true, // Set it to false if you don't want the user to pan the image.
-                  boundaryMargin: EdgeInsets.all(100),
-                  minScale: 0.5,
-                  maxScale: 4,
-                  child: Image.asset(imagePath, fit: BoxFit.contain),
-                ),
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Scaffold(
+              backgroundColor: Colors.black,
+              body: Stack(
+                children: <Widget>[
+                  Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        InteractiveViewer(
+                          panEnabled: true,
+                          boundaryMargin: EdgeInsets.all(100),
+                          minScale: 0.5,
+                          maxScale: 4,
+                          child: Image.asset(currentImagePath, fit: BoxFit.contain),
+                        ),
+                        if (isCampusMap) ...[
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(Icons.arrow_back, color: Colors.white),
+                                onPressed: () {
+                                  setState(() {
+                                    currentImagePath = 'assets/images/campus-map-north.jpeg';
+                                  });
+                                },
+                              ),
+                              SizedBox(width: 20), // Added space between buttons
+                              IconButton(
+                                icon: Icon(Icons.arrow_forward, color: Colors.white),
+                                onPressed: () {
+                                  setState(() {
+                                    currentImagePath = 'assets/images/campus-map-south.jpeg';
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: 80.0,
+                    right: 5.0,
+                    child: IconButton(
+                      icon: Icon(Icons.close, color: Colors.white),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                ],
               ),
-              Positioned(
-                top: 80.0,
-                right: 5.0,
-                child: IconButton(
-                  icon: Icon(Icons.close, color: Colors.white),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ),
-            ],
-          ),
+            );
+          },
         );
       },
-      barrierDismissible: true, // Set to false if you don't want to dismiss the dialog by tapping outside
+      barrierDismissible: true,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     );
   }
+
 }
