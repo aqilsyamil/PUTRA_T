@@ -38,6 +38,15 @@ class SidebarPage extends StatelessWidget {
           _buildDrawerItem(Icons.map, 'Campus Map', () {
             _showMap(context, 'assets/images/campus-map-north.jpeg', true);
           }),
+          // Virtual Tour Drawer Item
+          _buildDrawerItem(Icons.vrpano, 'Virtual Tour', () async {
+            const url = 'https://virtualtour.upm.edu.my/';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              print('Could not launch $url');
+            }
+          }),
           _buildDrawerItem(Icons.directions_bus, 'Transit Map', () {
             _showMap(context, 'assets/images/transit_map.png', false);
           }),
@@ -183,5 +192,4 @@ class SidebarPage extends StatelessWidget {
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     );
   }
-
 }
