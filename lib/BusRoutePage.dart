@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'SidebarPage.dart';
 import 'model/User.dart';
-import 'package:geolocator/geolocator.dart';
 import 'SidebarPageDriver.dart';
 
 class BusStop {
@@ -1087,7 +1086,7 @@ class _BusRoutePage extends State<BusRoutePage> {
     _pages = [
       // const Text('Bus Stops'),
       _buildBusStopsPage(), // Bus Stops Page
-      const Text('Bus.dart Routes'),
+      const Text('Bus Routes'),
       const Text('Navigation'),
       const Text('Starred'),
       const Text('Messages'),
@@ -1198,7 +1197,7 @@ class _BusRoutePage extends State<BusRoutePage> {
         titleSpacing: 0.0, // This removes the default spacing on the left of the title
         centerTitle: false,
         title: Text(
-          'Bus.dart Routes',
+          'Bus Routes',
           style: TextStyle(
             color: Colors.white, // Set the title font color to white
             fontWeight: FontWeight.w600, // Set the title font weight to bold
