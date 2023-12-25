@@ -146,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Icons.location_on,
               color: _currentIndex == 0 ? Colors.black : Colors.grey,
             ),
-            label: 'Bus Stops',
+            label: 'Bus.dart Stops',
           ),
           BottomNavigationBarItem(
             icon: Icon(

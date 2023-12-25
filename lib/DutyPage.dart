@@ -74,7 +74,7 @@ class _DutyPage extends State<DutyPage> {
               ),
             ),
             Text(
-              'Bus Route: Route 1',
+              'Bus.dart Route: Route 1',
               style: TextStyle(
                 fontSize: 18.0,
               ),

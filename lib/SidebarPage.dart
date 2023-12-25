@@ -63,7 +63,7 @@ class _SidebarPageState extends State<SidebarPage> {
           _buildDrawerItem(Icons.directions_bus, 'Transit Map', () {
             _showMap(context, 'assets/images/transit_map.png', false);
           }),
-          _buildDrawerItem(Icons.access_time, 'Bus Schedule', () async {
+          _buildDrawerItem(Icons.access_time, 'Bus.dart Schedule', () async {
             const url = 'https://hep.upm.edu.my/perkhidmatan_utama/seksyen_pengurusan_kenderaan/jadual_perkhidmatan_bas_kampus_upm-63338?L=en';
             if (await canLaunch(url)) {
               await launch(url);
@@ -76,12 +76,12 @@ class _SidebarPageState extends State<SidebarPage> {
               scheme: 'mailto',
               path: 'bhep@upm.edu.my',
               query: Uri.encodeFull(
-                  'subject=UPM Bus Feedback&body=Name of Informant:\n'
+                  'subject=UPM Bus.dart Feedback&body=Name of Informant:\n'
                       'Incident Date:\n'
                       'Incident Time:\n'
-                      'Bus Route:\n'
-                      'Bus Plate No.:\n'
-                      'Bus Stop:\n'
+                      'Bus.dart Route:\n'
+                      'Bus.dart Plate No.:\n'
+                      'Bus.dart Stop:\n'
                       'Details:\n'),
             );
             if (await canLaunch(emailLaunchUri.toString())) {

@@ -138,7 +138,7 @@ class _MessagesPage extends State<MessagesPage> {
     );
   }
 
-  // Method to launch Bus Schedule URL
+  // Method to launch Bus.dart Schedule URL
   Future<void> _launchBusScheduleURL() async {
     const url = 'https://hep.upm.edu.my/perkhidmatan_utama/seksyen_pengurusan_kenderaan/jadual_perkhidmatan_bas_kampus_upm-63338?L=en';
     if (await canLaunch(url)) {
@@ -153,12 +153,12 @@ class _MessagesPage extends State<MessagesPage> {
       scheme: 'mailto',
       path: 'bhep@upm.edu.my',
       query: Uri.encodeFull(
-          'subject=UPM Bus Feedback&body=Name of Informant:\n'
+          'subject=UPM Bus.dart Feedback&body=Name of Informant:\n'
               'Incident Date:\n'
               'Incident Time:\n'
-              'Bus Route:\n'
-              'Bus Plate No.:\n'
-              'Bus Stop:\n'
+              'Bus.dart Route:\n'
+              'Bus.dart Plate No.:\n'
+              'Bus.dart Stop:\n'
               'Details:\n'),
     );
 
@@ -257,7 +257,7 @@ class _MessagesPage extends State<MessagesPage> {
                         onPressed:
                           _launchBusScheduleURL,
                         child: Text(
-                          'Bus Schedule',
+                          'Bus.dart Schedule',
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), // Adjusted font size
                         ),
                       ),

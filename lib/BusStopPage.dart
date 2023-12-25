@@ -141,7 +141,7 @@ class _BusStopPageState extends State<BusStopPage> {
         titleSpacing: 0.0, // This removes the default spacing on the left of the title
         centerTitle: false,
         title: Text(
-          'Bus Stops',
+          'Bus.dart Stops',
           style: TextStyle(
             color: Colors.white, // Set the title font color to white
             fontWeight: FontWeight.w600, // Set the title font weight to bold

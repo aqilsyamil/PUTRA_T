@@ -976,7 +976,7 @@ class _BusRoutePage extends State<BusRoutePage> {
   @override
   void initState() {
     super.initState();
-    // Create Bus Stop markers for Route 1
+    // Create Bus.dart Stop markers for Route 1
     _route1BusStopMarkers.addAll(busStopsRoute1.map((busStop) {
       return Marker(
         markerId: MarkerId(busStop.id),
@@ -989,7 +989,7 @@ class _BusRoutePage extends State<BusRoutePage> {
       );
     }));
 
-    // Create Bus Stop markers for Route 2
+    // Create Bus.dart Stop markers for Route 2
     _route2BusStopMarkers.addAll(busStopsRoute2.map((busStop) {
       return Marker(
         markerId: MarkerId(busStop.id),
@@ -1002,7 +1002,7 @@ class _BusRoutePage extends State<BusRoutePage> {
       );
     }));
 
-    // Create Bus Stop markers for Route 3
+    // Create Bus.dart Stop markers for Route 3
     _route3BusStopMarkers.addAll(busStopsRoute3.map((busStop) {
       return Marker(
         markerId: MarkerId(busStop.id),
@@ -1015,7 +1015,7 @@ class _BusRoutePage extends State<BusRoutePage> {
       );
     }));
 
-    // Create Bus Stop markers for Route 4
+    // Create Bus.dart Stop markers for Route 4
     _route4BusStopMarkers.addAll(busStopsRoute4.map((busStop) {
       return Marker(
         markerId: MarkerId(busStop.id),
@@ -1028,7 +1028,7 @@ class _BusRoutePage extends State<BusRoutePage> {
       );
     }));
 
-    // Create Bus Stop markers for Route 5
+    // Create Bus.dart Stop markers for Route 5
     _route5BusStopMarkers.addAll(busStopsRoute5.map((busStop) {
       return Marker(
         markerId: MarkerId(busStop.id),
@@ -1087,7 +1087,7 @@ class _BusRoutePage extends State<BusRoutePage> {
     _pages = [
       // const Text('Bus Stops'),
       _buildBusStopsPage(), // Bus Stops Page
-      const Text('Bus Routes'),
+      const Text('Bus.dart Routes'),
       const Text('Navigation'),
       const Text('Starred'),
       const Text('Messages'),
@@ -1198,7 +1198,7 @@ class _BusRoutePage extends State<BusRoutePage> {
         titleSpacing: 0.0, // This removes the default spacing on the left of the title
         centerTitle: false,
         title: Text(
-          'Bus Routes',
+          'Bus.dart Routes',
           style: TextStyle(
             color: Colors.white, // Set the title font color to white
             fontWeight: FontWeight.w600, // Set the title font weight to bold
