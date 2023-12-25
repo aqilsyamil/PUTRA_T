@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'SettingPage.dart';
+import 'DriverLoginPage.dart';
 
 class SidebarPage extends StatefulWidget {
   @override
@@ -98,6 +99,13 @@ class _SidebarPageState extends State<SidebarPage> {
               onTapDown: (_) => _updateButtonPressed(true),
               onTapUp: (_) => _updateButtonPressed(false),
               onTapCancel: () => _updateButtonPressed(false),
+              onTap: () {
+                // Navigate to DriverLoginPage when the button is tapped
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DriverLoginPage()),
+                );
+              },
               child: Container(
                 decoration: BoxDecoration(
                   color: isDriverModeButtonPressed ? Color(0xFF00D161) : Colors.white,
