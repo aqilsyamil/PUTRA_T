@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'mainDriver.dart';
 
 class DriverLoginPage extends StatefulWidget {
   @override
@@ -57,10 +58,10 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start, // Align at the top
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 40), // Add a SizedBox with 60 pixels of height
+            SizedBox(height: 40),
             Align(
               alignment: Alignment.centerLeft,
               child: Column(
@@ -82,7 +83,7 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
                       fontFamily: 'Poppins',
                       fontSize: 25,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xFF00D161), // Set text color to green
+                      color: Color(0xFF00D161),
                     ),
                   ),
                 ],
@@ -92,10 +93,10 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
             _buildTextField("Driver ID", controller: driverIdController),
             SizedBox(height: 15),
             _buildTextField("Password", isPassword: true, controller: passwordController),
-            SizedBox(height: 15), // Add spacing below the password field
+            SizedBox(height: 15),
             Center(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center, // Center the text
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Have trouble logging in? ',
@@ -103,15 +104,15 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
                       fontFamily: 'Poppins',
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
-                      color: Colors.black, // Set text color to black
+                      color: Colors.black,
                     ),
                   ),
                   Ink(
                     decoration: BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          color: Color(0xFF00D161), // Set underline color to green
-                          width: 1.0, // Adjust the thickness as needed
+                          color: Color(0xFF00D161),
+                          width: 1.0,
                         ),
                       ),
                     ),
@@ -121,39 +122,44 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
                         fontFamily: 'Poppins',
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF00D161), // Set text color to green
+                        color: Color(0xFF00D161),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 30), // Adjust the spacing above the "Continue" button
+            SizedBox(height: 30),
             Container(
               width: 334,
               height: 65,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: isButtonEnabled ? Color(0xFF00D161) : Color(0xFF00D161).withOpacity(0.5), // Set background color to match the AppBar color
+                color: isButtonEnabled ? Color(0xFF00D161) : Color(0xFF00D161).withOpacity(0.5),
               ),
               child: TextButton(
                 onPressed: isButtonEnabled
                     ? () {
                   // Handle login button press
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MyHomePageDriver(initialIndex: 1),
+                    ),
+                  );
                 }
-                    : null, // Disable the button if conditions are not met
+                    : null,
                 child: Text(
                   'Continue',
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white, // Set text color to white
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
-            Spacer(), // Added Spacer to push the "Continue" button to the bottom
+            Spacer(),
           ],
         ),
       ),
@@ -175,7 +181,7 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: TextField(
-          controller: controller, // Assign the controller
+          controller: controller,
           obscureText: isPassword,
           decoration: InputDecoration(
             border: InputBorder.none,
