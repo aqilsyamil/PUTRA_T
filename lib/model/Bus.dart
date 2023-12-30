@@ -1,6 +1,5 @@
 
 import 'Driver.dart';
-import 'User.dart';
 
 class Bus {
   String _id;

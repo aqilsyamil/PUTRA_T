@@ -153,12 +153,12 @@ class _MessagesPage extends State<MessagesPage> {
       scheme: 'mailto',
       path: 'bhep@upm.edu.my',
       query: Uri.encodeFull(
-          'subject=UPM Bus.dart Feedback&body=Name of Informant:\n'
+          'subject=UPM Bus Feedback&body=Name of Informant:\n'
               'Incident Date:\n'
               'Incident Time:\n'
-              'Bus.dart Route:\n'
-              'Bus.dart Plate No.:\n'
-              'Bus.dart Stop:\n'
+              'Bus Route:\n'
+              'Bus Plate No.:\n'
+              'Bus Stop:\n'
               'Details:\n'),
     );
 
@@ -257,7 +257,7 @@ class _MessagesPage extends State<MessagesPage> {
                         onPressed:
                           _launchBusScheduleURL,
                         child: Text(
-                          'Bus.dart Schedule',
+                          'Bus Schedule',
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), // Adjusted font size
                         ),
                       ),

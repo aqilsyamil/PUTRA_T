@@ -63,7 +63,7 @@ class _SidebarPageState extends State<SidebarPage> {
           _buildDrawerItem(Icons.directions_bus, 'Transit Map', () {
             _showMap(context, 'assets/images/transit_map.png', false);
           }),
-          _buildDrawerItem(Icons.access_time, 'Bus.dart Schedule', () async {
+          _buildDrawerItem(Icons.access_time, 'Bus Schedule', () async {
             const url = 'https://hep.upm.edu.my/perkhidmatan_utama/seksyen_pengurusan_kenderaan/jadual_perkhidmatan_bas_kampus_upm-63338?L=en';
             if (await canLaunch(url)) {
               await launch(url);

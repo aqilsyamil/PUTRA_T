@@ -1,19 +1,17 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import 'BusStop.dart';
+import 'BusStopPoint.dart';
 import 'DrawnPath.dart';
 
 class RoutePointPath {
   String _routePointPathID;
-  BusStop _fromBusStop;
-  BusStop _toBusStop;
+  BusStopPoint _fromBusStop;
+  BusStopPoint _toBusStop;
   List<DrawnPath> _drawnPaths;
 
   // Constructor
   RoutePointPath({
     required String routePointPathID,
-    required BusStop fromBusStop,
-    required BusStop toBusStop,
+    required BusStopPoint fromBusStop,
+    required BusStopPoint toBusStop,
     required List<DrawnPath> drawnPaths,
   })  : _routePointPathID = routePointPathID,
         _fromBusStop = fromBusStop,
@@ -23,9 +21,9 @@ class RoutePointPath {
   // Getters
   String get routePointPathID => _routePointPathID;
 
-  BusStop get fromBusStop => _fromBusStop;
+  BusStopPoint get fromBusStop => _fromBusStop;
 
-  BusStop get toBusStop => _toBusStop;
+  BusStopPoint get toBusStop => _toBusStop;
 
   List<DrawnPath> get drawnPaths => _drawnPaths;
 
@@ -34,11 +32,11 @@ class RoutePointPath {
     _routePointPathID = value;
   }
 
-  set fromBusStop(BusStop value) {
+  set fromBusStop(BusStopPoint value) {
     _fromBusStop = value;
   }
 
-  set toBusStop(BusStop value) {
+  set toBusStop(BusStopPoint value) {
     _toBusStop = value;
   }
 

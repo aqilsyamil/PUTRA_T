@@ -39,7 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String mainStatus = "user";
 
-
   final Map<String, String> busStopImages = {
     'PFC': 'assets/images/pfc.JPG',
     'KTAG': 'assets/images/ktag.JPG',

@@ -1,12 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 import 'mainDriver.dart';
 
+// Driver model
+class Driver {
+  final int id;
+  final String fullName;
+  final String phoneNo;
+  final String password;
+  final String photoPath;
+
+  Driver({required this.id, required this.fullName, required this.phoneNo, required this.password, required this.photoPath});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'fullName': fullName,
+      'phoneNo': phoneNo,
+      'password': password,
+      'photoPath': photoPath,
+    };
+  }
+
+  static Driver fromMap(Map<String, dynamic> map) {
+    return Driver(
+      id: map['id'],
+      fullName: map['fullName'],
+      phoneNo: map['phoneNo'],
+      password: map['password'],
+      photoPath: map['photoPath'],
+    );
+  }
+}
+
+// Database helper
+class DatabaseHelper {
+  static Future<Database> getDatabase() async {
+    final dbPath = await getDatabasesPath();
+    return openDatabase(
+      join(dbPath, 'driver_database.db'),
+      onCreate: (db, version) {
+        return db.execute(
+          'CREATE TABLE drivers(id INTEGER PRIMARY KEY, fullName TEXT, phoneNo TEXT, password TEXT, photoPath TEXT)',
+        );
+      },
+      version: 1,
+    );
+  }
+
+  static Future<void> insertDriver(Driver driver) async {
+    final db = await getDatabase();
+    await db.insert(
+      'drivers',
+      driver.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  static Future<void> initializeDatabaseWithDummyData() async {
+    final db = await getDatabase();
+    List<Driver> drivers = [
+      Driver(id: 1000, fullName: 'Mohd Harris bin Mohd Ali', phoneNo: '+603-9769 1334', password: 'harris1000', photoPath: 'driver-1000.png'),
+      Driver(id: 1010, fullName: 'Ayub bin Somudi', phoneNo: '+603-9769 1334', password: 'ayub1010', photoPath: 'driver-1010.png'),
+      // ... Add all other drivers in a similar fashion
+      Driver(id: 1060, fullName: 'Mohd Norafrizan bin Mohd Normazi', phoneNo: '+603-9769 1334', password: 'afrizan1060', photoPath: 'driver-1060.png'),
+    ];
+
+    for (var driver in drivers) {
+      await insertDriver(driver);
+    }
+  }
+}
+
+// DriverLoginPage widget
 class DriverLoginPage extends StatefulWidget {
   String mainStatus;
 
-  DriverLoginPage({
-    required this.mainStatus
-  });
+  DriverLoginPage({required this.mainStatus});
 
   @override
   _DriverLoginPageState createState() => _DriverLoginPageState();
@@ -15,15 +86,15 @@ class DriverLoginPage extends StatefulWidget {
 class _DriverLoginPageState extends State<DriverLoginPage> {
   final TextEditingController driverIdController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
   bool isButtonEnabled = false;
+  bool isPasswordVisible = false;
 
   @override
   void initState() {
     super.initState();
-    // Add listeners to text controllers to update button state
     driverIdController.addListener(updateButtonState);
     passwordController.addListener(updateButtonState);
+    DatabaseHelper.initializeDatabaseWithDummyData();
   }
 
   void updateButtonState() {
@@ -37,7 +108,6 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
 
   @override
   void dispose() {
-    // Dispose of text controllers to avoid memory leaks
     driverIdController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -82,7 +152,7 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(height: 0),
+                  SizedBox(height: 10), // Added missing SizedBox
                   Text(
                     "Welcome Back Captain!",
                     style: TextStyle(
@@ -99,77 +169,25 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
             _buildTextField("Driver ID", controller: driverIdController),
             SizedBox(height: 15),
             _buildTextField("Password", isPassword: true, controller: passwordController),
-            SizedBox(height: 15),
-            Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Have trouble logging in? ',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Ink(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Color(0xFF00D161),
-                          width: 1.0,
-                        ),
-                      ),
-                    ),
-                    child: Text(
-                      'Contact BHEP',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF00D161),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             SizedBox(height: 30),
             Container(
-              width: 334,
-              height: 65,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: isButtonEnabled ? Color(0xFF00D161) : Color(0xFF00D161).withOpacity(0.5),
-              ),
-              child: TextButton(
-                onPressed: isButtonEnabled
-                    ? () {
-                  // Handle login button press
-                  widget.mainStatus = 'driver';
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => MyHomePageDriver(
-                          initialIndex: 1,
-                          mainStatus: widget.mainStatus
-                      ),
-                    ),
-                  );
-                }
-                    : null,
+              width: double.infinity, // Makes the button expand to the full width
+              height: 50,
+              child: ElevatedButton(
+                onPressed: isButtonEnabled ? () {
+                  // TODO: Implement your login logic here
+                  print('Continue button pressed');
+                } : null,
+                style: ElevatedButton.styleFrom(
+                  primary: isButtonEnabled ? Color(0xFF00D161) : Colors.grey, // Button color
+                  onPrimary: Colors.white, // Text color
+                ),
                 child: Text(
                   'Continue',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(fontSize: 18),
                 ),
               ),
             ),
-            Spacer(),
           ],
         ),
       ),
@@ -192,15 +210,25 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: TextField(
           controller: controller,
-          obscureText: isPassword,
+          obscureText: isPassword ? !isPasswordVisible : false,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: label,
             hintStyle: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: 20,
+              fontSize: 17,
               color: Color.fromRGBO(165, 165, 165, 1),
             ),
+            suffixIcon: isPassword ? IconButton(
+              icon: Icon(
+                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+              ),
+              onPressed: () {
+                setState(() {
+                  isPasswordVisible = !isPasswordVisible;
+                });
+              },
+            ) : null,
           ),
         ),
       ),

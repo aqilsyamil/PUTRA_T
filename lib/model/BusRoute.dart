@@ -12,11 +12,11 @@ class BusRoute {
     required String busRouteID,
     required String busRouteName,
     required List<RoutePointPath> routePointPaths,
-    required List<Bus> buses,
+    List<Bus>? buses,
   })  : _busRouteID = busRouteID,
         _busRouteName = busRouteName,
         _routePointPaths = routePointPaths,
-        _buses = buses;
+        _buses = buses?? [];
 
   // Getters
   String get busRouteID => _busRouteID;

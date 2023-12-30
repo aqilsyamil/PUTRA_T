@@ -1,5 +1,10 @@
-import 'model/Driver.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'model/Buses.dart';
 
 void main() {
-  Driver driver = Driver(id: '', fullName: '', phoneNo: '', password: '', photoPath: '');
+  WidgetsFlutterBinding.ensureInitialized();
+  print('hello');
+  Buses buses = Buses();
+  buses.getData();
 }
