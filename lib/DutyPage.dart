@@ -9,8 +9,9 @@ import 'DutyPageRoute5.dart';
 
 class DutyPage extends StatefulWidget {
   final String mainStatus;
+  final String? fullName;
 
-  DutyPage({required this.mainStatus});
+  DutyPage({required this.mainStatus, this.fullName});
 
   @override
   _DutyPageState createState() => _DutyPageState();
@@ -31,7 +32,9 @@ class _DutyPageState extends State<DutyPage> {
   @override
   void initState() {
     super.initState();
+    dutyFieldOneController.text = widget.fullName ?? '';
     dutyFieldOneController.addListener(checkIfAllFieldsFilled);
+    checkIfAllFieldsFilled();
   }
 
   void checkIfAllFieldsFilled() {
@@ -72,7 +75,7 @@ class _DutyPageState extends State<DutyPage> {
         ],
       ),
       drawer: widget.mainStatus != 'driver'
-          ? SidebarPage(mainStatus: widget.mainStatus)
+          ? SidebarPageDriver(mainStatus: widget.mainStatus)
           : SidebarPageDriver(mainStatus: widget.mainStatus),
       body: SingleChildScrollView(
         child: Padding(
@@ -124,6 +127,8 @@ class _DutyPageState extends State<DutyPage> {
   }
 
   Widget _buildCustomTextField(TextEditingController controller, String hintText) {
+    bool isEditable = hintText != 'Full Name';
+
     return Container(
       width: 334,
       height: 52,
@@ -139,6 +144,7 @@ class _DutyPageState extends State<DutyPage> {
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: TextField(
           controller: controller,
+          enabled: isEditable,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,
@@ -176,6 +182,7 @@ class _DutyPageState extends State<DutyPage> {
               } else {
                 selectedPlateNo = newValue;
               }
+              checkIfAllFieldsFilled();
             });
           },
           items: items.map<DropdownMenuItem<String>>((String value) {
@@ -204,7 +211,7 @@ class _DutyPageState extends State<DutyPage> {
       height: 65,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: isButtonEnabled ? Color(0xFF00D161) : Color(0xFF00D161).withOpacity(0.5),
+        color: isButtonEnabled ? Color(0xFF00D161) : Colors.grey.withOpacity(0.3),
       ),
       child: TextButton(
         onPressed: isButtonEnabled ? () {

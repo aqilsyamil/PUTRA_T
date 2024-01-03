@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'mainDriver.dart';
+import 'DutyPage.dart'; // Ensure you have this page
 
 // Driver model
 class Driver {
@@ -61,23 +61,63 @@ class DatabaseHelper {
   static Future<void> initializeDatabaseWithDummyData() async {
     final db = await getDatabase();
     List<Driver> drivers = [
-      Driver(id: 1000, fullName: 'Mohd Harris bin Mohd Ali', phoneNo: '+603-9769 1334', password: 'harris1000', photoPath: 'driver-1000.png'),
-      Driver(id: 1010, fullName: 'Ayub bin Somudi', phoneNo: '+603-9769 1334', password: 'ayub1010', photoPath: 'driver-1010.png'),
+      Driver(id: 1000,
+          fullName: 'Mohd Harris bin Mohd Ali',
+          phoneNo: '+603-9769 1334',
+          password: 'harris1000',
+          photoPath: 'driver-1000.png'),
+      Driver(id: 1010,
+          fullName: 'Ayub bin Somudi',
+          phoneNo: '+603-9769 1334',
+          password: 'ayub1010',
+          photoPath: 'driver-1010.png'),
       // ... Add all other drivers in a similar fashion
-      Driver(id: 1060, fullName: 'Mohd Norafrizan bin Mohd Normazi', phoneNo: '+603-9769 1334', password: 'afrizan1060', photoPath: 'driver-1060.png'),
+      Driver(id: 1060,
+          fullName: 'Mohd Norafrizan bin Mohd Normazi',
+          phoneNo: '+603-9769 1334',
+          password: 'afrizan1060',
+          photoPath: 'driver-1060.png'),
     ];
 
     for (var driver in drivers) {
       await insertDriver(driver);
     }
   }
+
+  // Method to validate driver credentials
+  static Future<bool> validateDriver(String driverId, String password) async {
+    final db = await getDatabase();
+    final List<Map<String, dynamic>> maps = await db.query(
+      'drivers',
+      where: 'id = ? AND password = ?',
+      whereArgs: [int.tryParse(driverId) ?? 0, password],
+    );
+    return maps.isNotEmpty;
+  }
+
+  static Future<String> getDriverFullName(String driverId,
+      String password) async {
+    final db = await getDatabase();
+    final List<Map<String, dynamic>> maps = await db.query(
+      'drivers',
+      columns: ['fullName'],
+      where: 'id = ? AND password = ?',
+      whereArgs: [int.tryParse(driverId) ?? 0, password],
+    );
+    if (maps.isNotEmpty) {
+      return maps.first['fullName'] as String;
+    } else {
+      return '';
+    }
+  }
 }
+
 
 // DriverLoginPage widget
 class DriverLoginPage extends StatefulWidget {
-  String mainStatus;
+  String? mainStatus;
 
-  DriverLoginPage({required this.mainStatus});
+  DriverLoginPage({this.mainStatus});
 
   @override
   _DriverLoginPageState createState() => _DriverLoginPageState();
@@ -94,15 +134,12 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
     super.initState();
     driverIdController.addListener(updateButtonState);
     passwordController.addListener(updateButtonState);
-    DatabaseHelper.initializeDatabaseWithDummyData();
   }
 
   void updateButtonState() {
-    final driverIdFilled = driverIdController.text.isNotEmpty;
-    final passwordValid = passwordController.text.length >= 8;
-
     setState(() {
-      isButtonEnabled = driverIdFilled && passwordValid;
+      isButtonEnabled = driverIdController.text.isNotEmpty &&
+          passwordController.text.length >= 8;
     });
   }
 
@@ -113,8 +150,38 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
     super.dispose();
   }
 
+  void _login(BuildContext context) async {
+    bool isValid = await DatabaseHelper.validateDriver(
+        driverIdController.text, passwordController.text);
+    if (isValid) {
+      String fullName = await DatabaseHelper.getDriverFullName(
+          driverIdController.text, passwordController.text);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) =>
+            DutyPage(mainStatus: "Your Status Here", fullName: fullName)),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) =>
+            AlertDialog(
+              title: Text('Login Failed'),
+              content: Text('Incorrect Driver ID or Password.'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    String status = widget.mainStatus ?? 'Default Status';
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -152,7 +219,7 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(height: 10), // Added missing SizedBox
+                  SizedBox(height: 10),
                   Text(
                     "Welcome Back Captain!",
                     style: TextStyle(
@@ -168,23 +235,25 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
             SizedBox(height: 40),
             _buildTextField("Driver ID", controller: driverIdController),
             SizedBox(height: 15),
-            _buildTextField("Password", isPassword: true, controller: passwordController),
+            _buildTextField(
+                "Password", isPassword: true, controller: passwordController),
             SizedBox(height: 30),
-            Container(
-              width: double.infinity, // Makes the button expand to the full width
-              height: 50,
-              child: ElevatedButton(
-                onPressed: isButtonEnabled ? () {
-                  // TODO: Implement your login logic here
-                  print('Continue button pressed');
-                } : null,
-                style: ElevatedButton.styleFrom(
-                  primary: isButtonEnabled ? Color(0xFF00D161) : Colors.grey, // Button color
-                  onPrimary: Colors.white, // Text color
+            ElevatedButton(
+              onPressed: isButtonEnabled ? () => _login(context) : null,
+              style: ElevatedButton.styleFrom(
+                primary: isButtonEnabled ? Color(0xFF00D161) : Colors.grey, // Change color to grey when not filled
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: Text(
-                  'Continue',
-                  style: TextStyle(fontSize: 18),
+                minimumSize: Size(334, 65), // Set the size of the button
+              ),
+              child: Text(
+                'Continue',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -193,13 +262,14 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
       ),
     );
   }
-
-  Widget _buildTextField(String label, {bool isPassword = false, TextEditingController? controller}) {
+  Widget _buildTextField(String label,
+      {bool isPassword = false, TextEditingController? controller}) {
     return Container(
       width: 334,
-      height: 52,
+      height: 52, // Adjust height as needed
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(10),
+        // Adjust border radius as needed
         color: Colors.white,
         border: Border.all(
           color: Color.fromRGBO(165, 165, 165, 1),

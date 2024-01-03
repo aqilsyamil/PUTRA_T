@@ -23,17 +23,17 @@ class MyHomePageDriver extends StatefulWidget {
 
   MyHomePageDriver({
     this.initialIndex = 0,
-    this.mainStatus = 'driver'
+    this.mainStatus = 'driver',
   });
 
   @override
-  _MyHomePageStateDriver createState() => _MyHomePageStateDriver(initialIndex); // Pass the initialIndex here
+  _MyHomePageStateDriver createState() => _MyHomePageStateDriver(initialIndex);
 }
 
 class _MyHomePageStateDriver extends State<MyHomePageDriver> {
   int _currentIndex;
 
-  _MyHomePageStateDriver(int initialIndex) : _currentIndex = initialIndex; // Initialize _currentIndex in the constructor
+  _MyHomePageStateDriver(int initialIndex) : _currentIndex = initialIndex;
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -45,12 +45,8 @@ class _MyHomePageStateDriver extends State<MyHomePageDriver> {
         index: _currentIndex,
         children: <Widget>[
           BusRoutePage(mainStatus: widget.mainStatus),
-          DutyPage(
-            mainStatus: widget.mainStatus
-          ),
-          MessagesPage(
-              mainStatus: widget.mainStatus
-          ),
+          DutyPage(mainStatus: widget.mainStatus),
+          MessagesPage(mainStatus: widget.mainStatus),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
