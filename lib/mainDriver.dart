@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'BusRoutePage.dart';
 import 'DutyPage.dart';
 import 'MessagesPage.dart';
+import 'DriverLoginPage.dart';
+import 'SidebarPageDriver.dart';
+
 
 void main() {
   runApp(MyAppDriver());
@@ -12,7 +15,7 @@ class MyAppDriver extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyHomePageDriver(),
+      home: DriverLoginPage(),
     );
   }
 }
@@ -20,20 +23,22 @@ class MyAppDriver extends StatelessWidget {
 class MyHomePageDriver extends StatefulWidget {
   final int initialIndex;
   String mainStatus;
+  final String fullName;
 
   MyHomePageDriver({
     this.initialIndex = 0,
     this.mainStatus = 'driver',
+    required this.fullName,
   });
 
   @override
-  _MyHomePageStateDriver createState() => _MyHomePageStateDriver(initialIndex);
+  _MyHomePageStateDriver createState() => _MyHomePageStateDriver(initialIndex); // Pass the initialIndex here
 }
 
 class _MyHomePageStateDriver extends State<MyHomePageDriver> {
   int _currentIndex;
 
-  _MyHomePageStateDriver(int initialIndex) : _currentIndex = initialIndex;
+  _MyHomePageStateDriver(int initialIndex) : _currentIndex = initialIndex; // Initialize _currentIndex in the constructor
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -41,12 +46,18 @@ class _MyHomePageStateDriver extends State<MyHomePageDriver> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      drawer: SidebarPageDriver(mainStatus: widget.mainStatus),
       body: IndexedStack(
         index: _currentIndex,
         children: <Widget>[
           BusRoutePage(mainStatus: widget.mainStatus),
-          DutyPage(mainStatus: widget.mainStatus),
-          MessagesPage(mainStatus: widget.mainStatus),
+          DutyPage(
+            mainStatus: widget.mainStatus,
+            fullName: widget.fullName,
+          ),
+          MessagesPage(
+              mainStatus: widget.mainStatus
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

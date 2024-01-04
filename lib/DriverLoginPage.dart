@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'DutyPage.dart'; // Ensure you have this page
+import 'mainDriver.dart';
+import 'main.dart';
 
 // Driver model
 class Driver {
@@ -71,7 +72,26 @@ class DatabaseHelper {
           phoneNo: '+603-9769 1334',
           password: 'ayub1010',
           photoPath: 'driver-1010.png'),
-      // ... Add all other drivers in a similar fashion
+      Driver(id: 1020,
+          fullName: 'Sharifful Azizi bin Musa',
+          phoneNo: '+603-9769 1334',
+          password: 'azizi1020',
+          photoPath: 'driver-1020.png'),
+      Driver(id: 1030,
+          fullName: 'Jumasnizam bin Jumin',
+          phoneNo: '+603-9769 1334',
+          password: 'nizam1030',
+          photoPath: 'driver-1030.png'),
+      Driver(id: 1040,
+          fullName: 'Muhd Al-Qawiy bin Tumesi',
+          phoneNo: '+603-9769 1334',
+          password: 'qawiy1040',
+          photoPath: 'driver-1040.png'),
+      Driver(id: 1050,
+          fullName: 'Ahmad Shafarin bin Abdul Mortalip',
+          phoneNo: '+603-9769 1334',
+          password: 'ahmad1050',
+          photoPath: 'driver-1050.png'),
       Driver(id: 1060,
           fullName: 'Mohd Norafrizan bin Mohd Normazi',
           phoneNo: '+603-9769 1334',
@@ -134,6 +154,7 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
     super.initState();
     driverIdController.addListener(updateButtonState);
     passwordController.addListener(updateButtonState);
+    DatabaseHelper.initializeDatabaseWithDummyData();
   }
 
   void updateButtonState() {
@@ -150,38 +171,54 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
     super.dispose();
   }
 
-  void _login(BuildContext context) async {
-    bool isValid = await DatabaseHelper.validateDriver(
+  void login(BuildContext context) async {
+
+    bool loginSuccess = await DatabaseHelper.validateDriver(
         driverIdController.text, passwordController.text);
-    if (isValid) {
+    if (loginSuccess) {
       String fullName = await DatabaseHelper.getDriverFullName(
           driverIdController.text, passwordController.text);
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) =>
-            DutyPage(mainStatus: "Your Status Here", fullName: fullName)),
+        MaterialPageRoute(
+          builder: (context) => MyHomePageDriver(
+            initialIndex: 1, // Navigate to DutyPage on successful login
+            mainStatus:  'driver',
+            fullName: fullName,
+          ),
+        ),
+            (Route<dynamic> route) => false,
       );
     } else {
       showDialog(
         context: context,
-        builder: (context) =>
-            AlertDialog(
-              title: Text('Login Failed'),
-              content: Text('Incorrect Driver ID or Password.'),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
+        builder: (context) => AlertDialog(
+          title: Text('Login Failed'),
+          content: Text('Incorrect Driver ID or Password.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () => Navigator.of(context).pop(),
             ),
+          ],
+        ),
       );
     }
   }
 
+  void switchToUserMode(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MyHomePage(
+          mainStatus: 'user',
+        ),
+      ),
+          (Route<dynamic> route) => false,
+    );
+  }
   @override
   Widget build(BuildContext context) {
-    String status = widget.mainStatus ?? 'Default Status';
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -239,9 +276,9 @@ class _DriverLoginPageState extends State<DriverLoginPage> {
                 "Password", isPassword: true, controller: passwordController),
             SizedBox(height: 30),
             ElevatedButton(
-              onPressed: isButtonEnabled ? () => _login(context) : null,
+              onPressed: isButtonEnabled ? () => login(context) : null,
               style: ElevatedButton.styleFrom(
-                primary: isButtonEnabled ? Color(0xFF00D161) : Colors.grey, // Change color to grey when not filled
+                primary: isButtonEnabled ? Color(0xFF00D161) : null,
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),

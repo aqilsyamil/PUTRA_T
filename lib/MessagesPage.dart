@@ -16,6 +16,7 @@ class MessagesPage extends StatefulWidget {
 
 class _MessagesPage extends State<MessagesPage> {
 
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -47,7 +48,9 @@ class _MessagesPage extends State<MessagesPage> {
           ),
         ],
       ),
-      drawer: widget.mainStatus != 'driver' ? SidebarPage(mainStatus: widget.mainStatus) : SidebarPageDriver(mainStatus: widget.mainStatus),
+      drawer: widget.mainStatus == 'driver'
+          ? SidebarPageDriver(mainStatus: widget.mainStatus)
+          : SidebarPage(mainStatus: widget.mainStatus),
       body: ListView(
         children: [
           messageTile(

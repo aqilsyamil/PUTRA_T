@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'SidebarPage.dart';
 import 'SidebarPageDriver.dart';
 import 'DutyPageRoute1.dart';
 import 'DutyPageRoute2.dart';
@@ -74,9 +73,7 @@ class _DutyPageState extends State<DutyPage> {
           ),
         ],
       ),
-      drawer: widget.mainStatus != 'driver'
-          ? SidebarPageDriver(mainStatus: widget.mainStatus)
-          : SidebarPageDriver(mainStatus: widget.mainStatus),
+      drawer: SidebarPageDriver(mainStatus: widget.mainStatus),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),

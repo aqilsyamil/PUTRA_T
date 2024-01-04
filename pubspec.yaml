@@ -22,7 +22,7 @@ dependencies:
   path_provider: ^2.1.1
   file_picker: ^6.1.1
   random_string: ^2.3.1
-  location: ^4.4.0
+  location: ^5.0.3
   flutter_svg: ^1.1.0
   sqflite: ^2.0.0+4 # Added sqflite for SQLite database operations
 
