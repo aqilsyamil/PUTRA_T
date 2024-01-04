@@ -7,7 +7,7 @@ class BusStopPage extends StatefulWidget {
   final Function(String) addToStarred;
   final Function(String) removeFromStarred;
   final Function(String, String) onBusStopSelected;
-  final void Function(String) updateEndLocation;// Add this line// New callback for bus stop selection
+  final void Function(String) updateEndLocation;
   final String mainStatus;
 
   BusStopPage({
@@ -143,8 +143,8 @@ class _BusStopPageState extends State<BusStopPage> {
         title: Text(
           'Bus Stops',
           style: TextStyle(
-            color: Colors.white, // Set the title font color to white
-            fontWeight: FontWeight.w600, // Set the title font weight to bold
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
           ),
           textAlign: TextAlign.left,
         ),
