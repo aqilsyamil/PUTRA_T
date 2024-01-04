@@ -1,0 +1,38 @@
+Target dependency graph (11 targets)
+Flutter in Pods, no dependencies
+GoogleMaps in Pods, no dependencies
+flutter_native_splash in Pods, depends on:
+Flutter in Pods (explicit)
+geocoding_ios in Pods, depends on:
+Flutter in Pods (explicit)
+geolocator_apple in Pods, depends on:
+Flutter in Pods (explicit)
+google_maps_flutter_ios in Pods, depends on:
+Flutter in Pods (explicit)
+GoogleMaps in Pods (explicit)
+url_launcher_ios in Pods, depends on:
+Flutter in Pods (explicit)
+Pods-Runner in Pods, depends on:
+Flutter in Pods (explicit)
+GoogleMaps in Pods (explicit)
+flutter_native_splash in Pods (explicit)
+geocoding_ios in Pods (explicit)
+geolocator_apple in Pods (explicit)
+google_maps_flutter_ios in Pods (explicit)
+url_launcher_ios in Pods (explicit)
+Pods-RunnerTests in Pods, depends on:
+Pods-Runner in Pods (explicit)
+Runner in Runner, depends on:
+Pods-Runner in Pods (implicit dependency via file 'Pods_Runner.framework' in build phase 'Link Binary')
+flutter_native_splash in Pods (implicit dependency via options '-framework flutter_native_splash' in build setting 'OTHER_LDFLAGS')
+geocoding_ios in Pods (implicit dependency via options '-framework geocoding_ios' in build setting 'OTHER_LDFLAGS')
+geolocator_apple in Pods (implicit dependency via options '-framework geolocator_apple' in build setting 'OTHER_LDFLAGS')
+google_maps_flutter_ios in Pods (implicit dependency via options '-framework google_maps_flutter_ios' in build setting 'OTHER_LDFLAGS')
+url_launcher_ios in Pods (implicit dependency via options '-framework url_launcher_ios' in build setting 'OTHER_LDFLAGS')
+RunnerTests in Runner, depends on:
+Runner in Runner (explicit)
+Pods-RunnerTests in Pods (implicit dependency via file 'Pods_RunnerTests.framework' in build phase 'Link Binary')
+flutter_native_splash in Pods (implicit dependency via options '-framework flutter_native_splash' in build setting 'OTHER_LDFLAGS')
+geocoding_ios in Pods (implicit dependency via options '-framework geocoding_ios' in build setting 'OTHER_LDFLAGS')
+geolocator_apple in Pods (implicit dependency via options '-framework geolocator_apple' in build setting 'OTHER_LDFLAGS')
+url_launcher_ios in Pods (implicit dependency via options '-framework url_launcher_ios' in build setting 'OTHER_LDFLAGS')

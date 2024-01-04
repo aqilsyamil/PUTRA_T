@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "bfd0fcfddc607eaea58b12a6b2b2077d004fc56b3e4b5d5416126653913f5078"
+build_start_time: [1703483512, 446118831]
+build_end_time: [1703483521, 915060043]
+inputs:
+  "/Users/aqil/Documents/AndroidStudioProjects/putra_tee/ios/Runner/AppDelegate.swift": [1702811481, 893727064]
