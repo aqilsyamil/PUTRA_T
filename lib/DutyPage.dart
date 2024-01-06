@@ -214,7 +214,12 @@ class _DutyPageState extends State<DutyPage> {
         onPressed: isButtonEnabled ? () {
           switch (selectedRoute) {
             case 'Route 1':
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => DutyPageRoute1()));
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => DutyPageRoute1(
+                  driverFullName: widget.fullName,
+                  busPlateNumber: selectedPlateNo, // Pass the selected plate number
+                ),
+              ));
               break;
             case 'Route 2':
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => DutyPageRoute2()));

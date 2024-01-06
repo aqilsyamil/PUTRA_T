@@ -25,6 +25,8 @@ dependencies:
   location: ^5.0.3
   flutter_svg: ^1.1.0
   sqflite: ^2.0.0+4 # Added sqflite for SQLite database operations
+  mysql1: ^0.20.0
+  mysql_client: ^0.0.27
 
 dev_dependencies:
   flutter_test:
@@ -76,7 +78,7 @@ flutter:
     - assets/images/driver/driver-1030.png
     - assets/images/driver/driver-1040.png
     - assets/images/driver/driver-1050.png
-    # ... Add other asset paths as needed
+
 
 flutter_native_splash:
   image: "assets/images/putra-t-splash-logo.png"

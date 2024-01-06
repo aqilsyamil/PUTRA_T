@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 class BusStop {
   final String id;
   final String name;
@@ -18,6 +19,10 @@ class BusStop {
   });
 }
 class DutyPageRoute1 extends StatefulWidget {
+  final String? driverFullName;
+  final String? busPlateNumber;
+
+  DutyPageRoute1({this.driverFullName, this.busPlateNumber});
   @override
   _DutyPageRoute1State createState() => _DutyPageRoute1State();
 }
@@ -33,22 +38,26 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
     BusStop(
       id: 'SJ162-1',
       name: 'KTAG',
-      position: LatLng(2.9906065922278406, 101.71072672072536), // Replace with the actual coordinates
+      position: LatLng(2.9906065922278406,
+          101.71072672072536), // Replace with the actual coordinates
     ),
     BusStop(
       id: 'SJ164-1',
       name: 'K14',
-      position: LatLng(2.9928782265949017, 101.71825515618721), // Replace with the actual coordinates
+      position: LatLng(2.9928782265949017,
+          101.71825515618721), // Replace with the actual coordinates
     ),
     BusStop(
       id: 'SJ832-1',
       name: 'IBS',
-      position: LatLng(2.9997608272333394, 101.72158870448789), // Replace with the actual coordinates
+      position: LatLng(2.9997608272333394,
+          101.72158870448789), // Replace with the actual coordinates
     ),
     BusStop(
       id: 'SJ144-1',
       name: 'FBMK',
-      position: LatLng(2.9999843428909356, 101.71484887998834), // Replace with the actual coordinates
+      position: LatLng(2.9999843428909356,
+          101.71484887998834), // Replace with the actual coordinates
     ),
     BusStop(
       id: 'SJ155-1',
@@ -58,22 +67,26 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
     BusStop(
       id: 'SJ159-1',
       name: 'FS',
-      position: LatLng(3.0007085010742323, 101.7068627631204), // Replace with the actual coordinates
+      position: LatLng(3.0007085010742323,
+          101.7068627631204), // Replace with the actual coordinates
     ),
     BusStop(
       id: 'SJ160-1',
       name: 'PSAS',
-      position: LatLng(3.0026803506513735, 101.70695294223508), // Replace with the actual coordinates
+      position: LatLng(3.0026803506513735,
+          101.70695294223508), // Replace with the actual coordinates
     ),
     BusStop(
       id: 'SJ151-1',
       name: 'FSTM',
-      position: LatLng(3.004266665826632, 101.70862908173052), // Replace with the actual coordinates
+      position: LatLng(3.004266665826632,
+          101.70862908173052), // Replace with the actual coordinates
     ),
     BusStop(
       id: 'SJ153-1',
       name: 'Central',
-      position: LatLng(3.0012917167440483, 101.70969564394254), // Replace with the actual coordinates
+      position: LatLng(3.0012917167440483,
+          101.70969564394254), // Replace with the actual coordinates
     ),
   ];
 
@@ -213,11 +226,53 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
             child: GoogleMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(
-                target: roadCoordinatesRoute1.first,
-                zoom: 14.0,
+                target: LatLng(2.998353514463262, 101.71417772073517),
+                zoom: 15.0,
               ),
               markers: _markers,
               polylines: _polylines,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            height: 350,
+            color: Colors.white,
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (widget.driverFullName != null)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.driverFullName!,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Text(
+                          widget.busPlateNumber ?? "N/A", // Display bus plate number
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                // ... any other widget you want inside the Container ...
+              ],
             ),
           ),
         ],
