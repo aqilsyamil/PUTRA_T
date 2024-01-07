@@ -221,17 +221,36 @@ class _DutyPageState extends State<DutyPage> {
               ));
               break;
             case 'Route 2':
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => DutyPageRoute2()));
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => DutyPageRoute2(
+                  driverFullName: widget.fullName,
+                  busPlateNumber: selectedPlateNo, // Pass the selected plate number
+                ),
+              ));
               break;
             case 'Route 3':
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => DutyPageRoute3()));
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => DutyPageRoute3(
+                  driverFullName: widget.fullName,
+                  busPlateNumber: selectedPlateNo, // Pass the selected plate number
+                ),
+              ));
               break;
             case 'Route 4':
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => DutyPageRoute4()));
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => DutyPageRoute4(
+                  driverFullName: widget.fullName,
+                  busPlateNumber: selectedPlateNo, // Pass the selected plate number
+                ),
+              ));
               break;
             case 'Route 5':
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => DutyPageRoute5()));
-              break;
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => DutyPageRoute5(
+                  driverFullName: widget.fullName,
+                  busPlateNumber: selectedPlateNo, // Pass the selected plate number
+                ),
+              ));
           }
         } : null,
         child: Text(

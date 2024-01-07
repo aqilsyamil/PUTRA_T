@@ -30,6 +30,9 @@ class DutyPageRoute1 extends StatefulWidget {
 class _DutyPageRoute1State extends State<DutyPageRoute1> {
   late GoogleMapController mapController;
   String? selectedButton;
+  bool _isSatelliteView = false;
+  GoogleMapController? _googleMapController;
+
   final List<BusStop> busStopsRoute1 = [
     BusStop(
       id: 'SJ100-1',
@@ -177,6 +180,7 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
       );
     }));
 
+
     _polylines.add(Polyline(
       polylineId: PolylineId('route1'),
       points: roadCoordinatesRoute1,
@@ -185,50 +189,86 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
     ));
   }
 
+  void _showEndDutyConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("End Duty"),
+          content: Text("Are you sure to end duty now?"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                // Define the action to take when "OK" is pressed
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+
+    CameraPosition initialPosition = CameraPosition(
+      target: LatLng(2.998353514463262, 101.71417772073517),
+      zoom: 15.0,
+    );
+
+    mapController.animateCamera(CameraUpdate.newCameraPosition(initialPosition));
+  }
+
+  void _animateToRoute1() {
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        target: LatLng(2.998353514463262, 101.71417772073517),
+        zoom: 15.0,
+      ),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         titleSpacing: 0.0,
         backgroundColor: Color(0xFF00D161),
         iconTheme: IconThemeData(color: Colors.white),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Duty',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
+            Padding(
+              padding: EdgeInsets.only(left: 40.0), // Add left padding
+              child: Text(
+                'Duty',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      // Define what happens when the button is pressed
-                    },
-                    child: Text(
-                      'End Duty',
-                      style: TextStyle(
-                        color: Colors.white, // Text color
-                      ),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: Colors.red, // Button fill color
-                    ),
-                  ),
-                ],
+            OutlinedButton(
+              onPressed: _showEndDutyConfirmationDialog,
+              child: Text(
+                'End Duty',
+                style: TextStyle(color: Colors.white),
               ),
+              style: OutlinedButton.styleFrom(backgroundColor: Colors.red),
             ),
           ],
         ),
+        actions: [SizedBox(width: 20)],
       ),
       body: Column(
         children: [
@@ -238,12 +278,15 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
             width: double.infinity,
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(left: 40.0),
-            child: Text(
-              'Route 1',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-                fontSize: 20,
+            child: TextButton( // Change to TextButton
+              onPressed: _animateToRoute1, // Call the animation function
+              child: Text(
+                'Route 1',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                ),
               ),
             ),
           ),
@@ -256,6 +299,8 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
               ),
               markers: _markers,
               polylines: _polylines,
+              mapType: _isSatelliteView ? MapType.satellite : MapType.normal,
+              myLocationEnabled: false,
             ),
           ),
           Container(
@@ -380,8 +425,20 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
           ),
         ],
       ),
-
-
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(top: 0.0, right: 0.0, bottom: 310.0, left: 0.0), // Adjust top and right padding
+        child: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              _isSatelliteView = !_isSatelliteView;
+            });
+          },
+          child: Icon(_isSatelliteView ? Icons.map : Icons.public),
+          backgroundColor: Colors.white,
+          mini: false,
+          shape: CircleBorder(),
+        ),
+      ),
     );
   }
 }
