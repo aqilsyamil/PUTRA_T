@@ -29,6 +29,7 @@ class DutyPageRoute1 extends StatefulWidget {
 
 class _DutyPageRoute1State extends State<DutyPageRoute1> {
   late GoogleMapController mapController;
+  String? selectedButton;
   final List<BusStop> busStopsRoute1 = [
     BusStop(
       id: 'SJ100-1',
@@ -193,17 +194,41 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0.0,
-        centerTitle: false,
-        title: Text(
-          'Duty',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-          ),
-          textAlign: TextAlign.left,
-        ),
         backgroundColor: Color(0xFF00D161),
         iconTheme: IconThemeData(color: Colors.white),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Duty',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      // Define what happens when the button is pressed
+                    },
+                    child: Text(
+                      'End Duty',
+                      style: TextStyle(
+                        color: Colors.white, // Text color
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.red, // Button fill color
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [
@@ -271,12 +296,92 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
                       ),
                     ],
                   ),
-                // ... any other widget you want inside the Container ...
-              ],
+
+                SizedBox(height: 10),
+
+                Text(
+                  'Current bus occupancy',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16, // Adjust the font size as needed
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+
+                SizedBox(height: 10),// Add some spacing
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedButton = 'Low';
+                        });
+                      },
+                      child: Text('Low',
+                        style: TextStyle(
+                          color: Colors.white, // White text color
+                          fontWeight: FontWeight.bold, // Bold text
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: selectedButton == 'Low' ? Colors.green : Colors.green.withOpacity(0.3),
+                        minimumSize: Size(120, 190),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5), // Reduced border radius
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedButton = 'Medium';
+                        });
+                      },
+                      child: Text('Medium',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: selectedButton == 'Medium' ? Colors.yellow : Colors.yellow.withOpacity(0.3),
+                        minimumSize: Size(120, 190),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5), // Reduced border radius
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedButton = 'High';
+                        });
+                      },
+                      child: Text('High',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: selectedButton == 'High' ? Colors.red : Colors.red.withOpacity(0.3),
+                        minimumSize: Size(120, 190),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8), // Reduced border radius
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+             ],
             ),
           ),
         ],
       ),
+
+
     );
   }
 }

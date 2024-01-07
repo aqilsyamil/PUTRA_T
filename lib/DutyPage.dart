@@ -17,7 +17,6 @@ class DutyPage extends StatefulWidget {
 }
 
 class _DutyPageState extends State<DutyPage> {
-
   final List<String> busRoutes = ['Route 1', 'Route 2', 'Route 3', 'Route 4', 'Route 5'];
   final List<String> busPlateNumbers = ['BPR 6030', 'BPR 6021', 'BPR 6025', 'BPR 6027', 'BPG 7474'];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
