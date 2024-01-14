@@ -79,8 +79,7 @@ class BusStop extends StatelessWidget {
   }
 
   void onBusStopSelect() {
-    String formattedLocation = "$name ($shortName)";
-    updateEndLocation(formattedLocation); // Pass the formatted location
+    onSelect();
   }
 
   void _showFullScreenImage(BuildContext context, String imagePath) {

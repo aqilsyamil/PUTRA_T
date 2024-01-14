@@ -121,10 +121,11 @@ class _BusStopPageState extends State<BusStopPage> {
     });
   }
 
-  void onBusStopSelected(String busStopName, String busStopShortName) {
-    String formattedLocation = "$busStopName ($busStopShortName)";
-    widget.updateEndLocation(formattedLocation); // Adjust this to pass two strings if needed
-  }
+  // void onBusStopSelected(String busStopName, String busStopShortName) {
+  //   String formattedLocation = "$busStopName ($busStopShortName)";
+  //
+  //   widget.updateEndLocation(formattedLocation); // Adjust this to pass two strings if needed
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -221,7 +222,7 @@ class _BusStopPageState extends State<BusStopPage> {
                     });
                   },
                   onSelect: () {
-                    onBusStopSelected(busStopName, busStopShortName);
+                    widget.onBusStopSelected(busStopName, busStopShortName);
                   },
                   updateEndLocation: widget.updateEndLocation,
                   imagePath: imagePath, // Pass the image path

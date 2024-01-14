@@ -81,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void onBusStopSelected(String busStopName, String busStopShortName) {
     String formatLocation = "$busStopName ($busStopShortName)";
+    updateEndLocation(formatLocation);
     setState(() {
       _currentIndex = 2; // Index of NavigationPage
     });
@@ -88,7 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void updateEndLocation(String location) {
-
     setState(() {
       _currentIndex = 2; // Navigate to NavigationPage
       endLocation = location;
