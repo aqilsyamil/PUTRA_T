@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'model/Info.dart';
+import 'BitMapDescriptor.dart';
 
 class BusStop {
   final String id;
@@ -31,6 +33,7 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
   late GoogleMapController mapController;
   String? selectedButton;
   bool _isSatelliteView = false;
+  List<InfoWindowModel> infoWindowModels = [];
   GoogleMapController? _googleMapController;
 
   final List<BusStop> busStopsRoute1 = [
@@ -170,15 +173,31 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
     super.initState();
     _initializeRouteData();
   }
+  void _initializeRouteData() async {
+    // Load and resize the bus stop icon
+    final customIcon = await getResizedMarkerIcon('assets/images/bus_stop_marker.png', 80, 80);
 
-  void _initializeRouteData() {
+    // Add bus stop markers with the resized icon
     _markers.addAll(busStopsRoute1.map((busStop) {
       return Marker(
         markerId: MarkerId(busStop.id),
         position: busStop.position,
+        icon: customIcon, // Use the resized custom icon
         infoWindow: InfoWindow(title: busStop.name),
       );
     }));
+
+    // Load and resize the bus location icon
+    final busLocationIcon = await getResizedMarkerIcon('assets/images/bus_location_tracker.png', 60, 60);
+
+    // Add the bus location marker with the resized icon
+    setState(() {
+      _markers.add(Marker(
+        markerId: MarkerId('bus_location'),
+        position: LatLng(3.001863433628344, 101.70699124463405),
+        icon: busLocationIcon,
+      ));
+    });
 
 
     _polylines.add(Polyline(
@@ -236,6 +255,8 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
       ),
     ));
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -428,6 +449,7 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
       floatingActionButton: Padding(
         padding: EdgeInsets.only(top: 0.0, right: 0.0, bottom: 310.0, left: 0.0), // Adjust top and right padding
         child: FloatingActionButton(
+          heroTag: 'unique_hero_tag_duty_page',
           onPressed: () {
             setState(() {
               _isSatelliteView = !_isSatelliteView;

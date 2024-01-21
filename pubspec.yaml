@@ -1,11 +1,11 @@
 name: putra_tee
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
 version: 1.0.0+1
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
+
 
 dependencies:
   flutter:
@@ -72,12 +72,15 @@ flutter:
     - assets/images/my-location.png
     - assets/images/campus-map-south.jpeg
     - assets/images/campus-map-north.jpeg
+    - assets/images/bus_location_tracker.png
+    - assets/images/bus_stop_marker.png
     - assets/images/driver/driver-1000.png
     - assets/images/driver/driver-1010.png
     - assets/images/driver/driver-1020.png
     - assets/images/driver/driver-1030.png
     - assets/images/driver/driver-1040.png
     - assets/images/driver/driver-1050.png
+
 
 
 flutter_native_splash:
