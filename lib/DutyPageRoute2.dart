@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'BitMapDescriptor.dart';
 class BusStop {
   final String id;
   final String name;
@@ -164,14 +164,31 @@ class _DutyPageRoute2State extends State<DutyPageRoute2> {
     _initializeRouteData();
   }
 
-  void _initializeRouteData() {
+  void _initializeRouteData() async {
+    // Load and resize the bus stop icon
+    final customIcon = await getResizedMarkerIcon('assets/images/bus_stop_marker.png', 80, 80);
+
+    // Add bus stop markers with the resized icon
     _markers.addAll(busStopsRoute2.map((busStop) {
       return Marker(
         markerId: MarkerId(busStop.id),
         position: busStop.position,
+        icon: customIcon, // Use the resized custom icon
         infoWindow: InfoWindow(title: busStop.name),
       );
     }));
+
+    // Load and resize the bus location icon
+    final busLocationIcon = await getResizedMarkerIcon('assets/images/bus_location_tracker.png', 60, 60);
+
+    // Add the bus location marker with the resized icon
+    setState(() {
+      _markers.add(Marker(
+        markerId: MarkerId('bus_location'),
+        position: LatLng(3.001863433628344, 101.70699124463405),
+        icon: busLocationIcon,
+      ));
+    });
 
 
     _polylines.add(Polyline(

@@ -173,7 +173,7 @@
 //frfrfrfrfrffr
 
 import 'package:flutter/material.dart';
-import 'SidebarPage.dart';
+import 'SidebarPage.dart'; // Ensure this import points to your actual SidebarPage file
 
 class NavigationPage extends StatefulWidget {
   final String initialEndLocation;
@@ -197,10 +197,10 @@ class NavigationPageState extends State<NavigationPage> {
   TextEditingController endLocationController = TextEditingController();
   OverlayEntry? _overlayEntry;
 
-  final LayerLink _layerLink = LayerLink();
   final GlobalKey startLocationKey = GlobalKey();
   final GlobalKey endLocationKey = GlobalKey();
   final GlobalKey availableRoutesKey = GlobalKey();
+
   List<Map<String, String>> _filteredBusStops = [];
   List<Map<String, String>> busStops = [
     {'name': 'Academic Complex A (Opp FBMK)', 'shortName': 'KAA'},
@@ -225,15 +225,49 @@ class NavigationPageState extends State<NavigationPage> {
     {'name': 'Tenth College', 'shortName': 'K10'},
     {'name': 'Tan Sri Aishah Ghani College', 'shortName': 'KTAG'},
     {'name': 'Tan Sri Mustaffa Babjee', 'shortName': 'KMB'},
-    {'name': 'Central (Great Hall & Experimental Theatre)', 'shortName': 'Central'}
-    // Add other bus stops here
+    {'name': 'Central (Great Hall & Experimental Theatre)', 'shortName': 'Central'},
+    // Add other bus stops as needed
   ];
+
+
+  Map<String, List<String>> busStopRoutes = {
+    'PFC': ['1', '5'],
+    'KTAG': ['1', '2', '5'],
+    'SFC': ['2', '5'],
+    'Central': ['1', '2', '3', '4'],
+    'FBMK': ['1', '2', '3', '4'],
+    // 'FBSB': [], // Uncomment if FBSB has specific routes
+    'FP': ['5'],
+    'FPC': ['5'],
+    'FRSB': ['3'],
+    'FS': ['1', '2', '3', '4'],
+    'FSKTM': ['1', '2', '3'],
+    'FSTM': ['1', '2', '3', '4'],
+    'IBS': ['1', '2'],
+    // 'Opp INSPEM': [], // Uncomment if Opp INSPEM has specific routes
+    'K10': ['3'],
+    'K14': ['1', '2'],
+    'KMB': ['4'],
+    'PSAS': ['1', '2', '3', '4'],
+    'SGS': ['5'],
+    'Banquet': ['5'],
+    // 'ASPer': [], // Uncomment if ASPer has specific routes
+    'KAA': ['3', '4'],
+    'Academy': ['5'],
+    // Add other bus stop routes as needed
+  };
 
   @override
   void initState() {
     super.initState();
     endLocationController.text = widget.initialEndLocation;
     _filteredBusStops = busStops;
+  }
+
+  void _selectBusStop(TextEditingController controller, String busStopName) {
+    setState(() {
+      controller.text = busStopName;
+    });
   }
 
   void setEndLocation(String location) {
@@ -257,7 +291,7 @@ class NavigationPageState extends State<NavigationPage> {
       _overlayEntry = null;
     }
 
-    if (controller.text.isNotEmpty) {
+    if (controller.text.isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         RenderBox renderBox = key.currentContext!.findRenderObject() as RenderBox;
         var size = renderBox.size;
@@ -269,16 +303,11 @@ class NavigationPageState extends State<NavigationPage> {
     }
   }
 
-  OverlayEntry _createOverlayEntry(
-      BuildContext context,
-      TextEditingController controller,
-      Size size,
-      Offset offset,
-      ) {
+  OverlayEntry _createOverlayEntry(BuildContext context, TextEditingController controller, Size size, Offset offset) {
     return OverlayEntry(
       builder: (context) => Positioned(
         left: offset.dx,
-        top: offset.dy + size.height + 8.0, // Position below the text field with some spacing
+        top: offset.dy + size.height + 8.0,
         width: size.width,
         child: Material(
           elevation: 4.0,
@@ -292,7 +321,7 @@ class NavigationPageState extends State<NavigationPage> {
                   title: Text(busStop['name']!),
                   subtitle: Text(busStop['shortName']!),
                   onTap: () {
-                    controller.text = busStop['name']!;
+                    _selectBusStop(controller, busStop['name']!);
                     _overlayEntry!.remove();
                     _overlayEntry = null;
                   },
@@ -305,8 +334,26 @@ class NavigationPageState extends State<NavigationPage> {
     );
   }
 
+  List<String> findOverlappingRoutes(String startShortName, String endShortName) {
+    var startRoutes = busStopRoutes[startShortName] ?? [];
+    var endRoutes = busStopRoutes[endShortName] ?? [];
+    return startRoutes.toSet().intersection(endRoutes.toSet()).toList();
+  }
+
+  String _extractShortName(String busStopName) {
+    var foundStop = busStops.firstWhere(
+            (stop) => stop['name'] == busStopName,
+        orElse: () => {'shortName': ''}
+    );
+    return foundStop['shortName'] ?? '';
+  }
+
   @override
   Widget build(BuildContext context) {
+    String startShortName = _extractShortName(startLocationController.text);
+    String endShortName = _extractShortName(endLocationController.text);
+    List<String> overlappingRoutes = findOverlappingRoutes(startShortName, endShortName);
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -431,6 +478,28 @@ class NavigationPageState extends State<NavigationPage> {
                   ),
                 ),
               ),
+              if (overlappingRoutes.isNotEmpty)
+              Wrap(
+                spacing: 8.0,
+                children: overlappingRoutes.map((route) => ElevatedButton(
+                  onPressed: () {
+                    // Handle button press
+                  },
+                  child: Text('Route $route'),
+                )).toList(),
+                 )
+              else
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: Text(
+                    'No available routes',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey[700], // Dark grey color
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

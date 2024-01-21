@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'model/Info.dart';
 import 'BitMapDescriptor.dart';
 
 class BusStop {
@@ -33,7 +32,6 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
   late GoogleMapController mapController;
   String? selectedButton;
   bool _isSatelliteView = false;
-  List<InfoWindowModel> infoWindowModels = [];
   GoogleMapController? _googleMapController;
 
   final List<BusStop> busStopsRoute1 = [
@@ -238,6 +236,12 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    print(mapController);
+
+    for (var i = 0; i < busStopsRoute1.length; i++) {
+      print(busStopsRoute1[i].id);
+      mapController.showMarkerInfoWindow(MarkerId(busStopsRoute1[i].id));
+    }
 
     CameraPosition initialPosition = CameraPosition(
       target: LatLng(2.998353514463262, 101.71417772073517),

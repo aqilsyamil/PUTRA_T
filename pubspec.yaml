@@ -69,11 +69,11 @@ flutter:
     - assets/images/sfc.JPG
     - assets/images/sgs.JPG
     - assets/images/kaa.JPG
-    - assets/images/my-location.png
     - assets/images/campus-map-south.jpeg
     - assets/images/campus-map-north.jpeg
     - assets/images/bus_location_tracker.png
     - assets/images/bus_stop_marker.png
+    -  - assets/images/my-location.png
     - assets/images/driver/driver-1000.png
     - assets/images/driver/driver-1010.png
     - assets/images/driver/driver-1020.png

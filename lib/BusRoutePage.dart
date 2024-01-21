@@ -3,6 +3,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'SidebarPage.dart';
 import 'model/User.dart';
 import 'SidebarPageDriver.dart';
+import 'BitMapDescriptor.dart';
+
 
 class BusStop {
   final String id;
@@ -274,14 +276,11 @@ class _BusRoutePage extends State<BusRoutePage> {
     ),
   ];
 
-  Set<Marker> _route1BusStopMarkers = Set<Marker>();
-  Set<Marker> _route2BusStopMarkers = Set<Marker>();
-  Set<Marker> _route3BusStopMarkers = Set<Marker>();
-  Set<Marker> _route4BusStopMarkers = Set<Marker>();
-  Set<Marker> _route5BusStopMarkers = Set<Marker>();
-  Set<Marker> _getMyLocationMarker = Set<Marker>();
-
-  Set<Polyline> _polylines = Set<Polyline>();
+  // Set<Marker> _route1BusStopMarkers = Set<Marker>();
+  // Set<Marker> _route2BusStopMarkers = Set<Marker>();
+  // Set<Marker> _route3BusStopMarkers = Set<Marker>();
+  // Set<Marker> _route4BusStopMarkers = Set<Marker>();
+  // Set<Marker> _route5BusStopMarkers = Set<Marker>();
 
   List<LatLng> roadCoordinatesRoute1 = [
     LatLng( 2.991729803544021, 101.70760245310039), // PFC BSP
@@ -1066,75 +1065,34 @@ class _BusRoutePage extends State<BusRoutePage> {
   late GoogleMapController _googleMapController;
 
   User user = User(id: "001");
+  Set<Marker> _getMyLocationMarker = Set<Marker>();
+  Set<Marker> _markersRoute1 = Set<Marker>();
+  Set<Marker> _busStopMarkersRoute1 = Set<Marker>();
+  Set<Marker> _busStopMarkersRoute2 = Set<Marker>();
+  Set<Marker> _busStopMarkersRoute3 = Set<Marker>();
+  Set<Marker> _busStopMarkersRoute4 = Set<Marker>();
+  Set<Marker> _busStopMarkersRoute5 = Set<Marker>();
+  Set<Polyline> _polylines = Set<Polyline>();
 
   @override
   void initState() {
     super.initState();
-    // Create Bus.dart Stop markers for Route 1
-    _route1BusStopMarkers.addAll(busStopsRoute1.map((busStop) {
+    _initializeRouteData();
+  }
+
+  void _initializeRouteData() async {
+    // Load and resize the bus stop icon
+    final customIcon = await getResizedMarkerIcon('assets/images/bus_stop_marker.png', 80, 80);
+
+    // Add bus stop markers with the resized icon
+    _busStopMarkersRoute1.addAll(busStopsRoute1.map((busStop) {
       return Marker(
         markerId: MarkerId(busStop.id),
         position: busStop.position,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        infoWindow: InfoWindow(
-          title: busStop.name,
-          snippet: '',
-        ),
+        icon: customIcon, // Use the resized custom icon
+        infoWindow: InfoWindow(title: busStop.name),
       );
     }));
-
-    // Create Bus.dart Stop markers for Route 2
-    _route2BusStopMarkers.addAll(busStopsRoute2.map((busStop) {
-      return Marker(
-        markerId: MarkerId(busStop.id),
-        position: busStop.position,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        infoWindow: InfoWindow(
-          title: busStop.name,
-          snippet: '',
-        ),
-      );
-    }));
-
-    // Create Bus.dart Stop markers for Route 3
-    _route3BusStopMarkers.addAll(busStopsRoute3.map((busStop) {
-      return Marker(
-        markerId: MarkerId(busStop.id),
-        position: busStop.position,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        infoWindow: InfoWindow(
-          title: busStop.name,
-          snippet: '',
-        ),
-      );
-    }));
-
-    // Create Bus.dart Stop markers for Route 4
-    _route4BusStopMarkers.addAll(busStopsRoute4.map((busStop) {
-      return Marker(
-        markerId: MarkerId(busStop.id),
-        position: busStop.position,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        infoWindow: InfoWindow(
-          title: busStop.name,
-          snippet: '',
-        ),
-      );
-    }));
-
-    // Create Bus.dart Stop markers for Route 5
-    _route5BusStopMarkers.addAll(busStopsRoute5.map((busStop) {
-      return Marker(
-        markerId: MarkerId(busStop.id),
-        position: busStop.position,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        infoWindow: InfoWindow(
-          title: busStop.name,
-          snippet: '',
-        ),
-      );
-    }));
-
 
     // Initialize the polylines for Route 1 (blue).
     _polylines.add(Polyline(
@@ -1144,6 +1102,17 @@ class _BusRoutePage extends State<BusRoutePage> {
       points: roadCoordinatesRoute1,
     ));
 
+
+    // Add bus stop markers with the resized icon
+    _busStopMarkersRoute2.addAll(busStopsRoute2.map((busStop) {
+      return Marker(
+        markerId: MarkerId(busStop.id),
+        position: busStop.position,
+        icon: customIcon, // Use the resized custom icon
+        infoWindow: InfoWindow(title: busStop.name),
+      );
+    }));
+
     // Initialize the polylines for Route 2 (red).
     _polylines.add(Polyline(
       polylineId: PolylineId('route2'),
@@ -1151,6 +1120,17 @@ class _BusRoutePage extends State<BusRoutePage> {
       width: 6,
       points: roadCoordinatesRoute2, // Replace with Route 2 coordinates.
     ));
+
+
+    // Add bus stop markers with the resized icon
+    _busStopMarkersRoute3.addAll(busStopsRoute3.map((busStop) {
+      return Marker(
+        markerId: MarkerId(busStop.id),
+        position: busStop.position,
+        icon: customIcon, // Use the resized custom icon
+        infoWindow: InfoWindow(title: busStop.name),
+      );
+    }));
 
     // Initialize the polylines for Route 3 (green).
     _polylines.add(Polyline(
@@ -1160,6 +1140,16 @@ class _BusRoutePage extends State<BusRoutePage> {
       points: roadCoordinatesRoute3, // Replace with Route 3 coordinates.
     ));
 
+    // Add bus stop markers with the resized icon
+    _busStopMarkersRoute4.addAll(busStopsRoute4.map((busStop) {
+      return Marker(
+        markerId: MarkerId(busStop.id),
+        position: busStop.position,
+        icon: customIcon, // Use the resized custom icon
+        infoWindow: InfoWindow(title: busStop.name),
+      );
+    }));
+
     // Initialize the polylines for Route 4 (purple).
     _polylines.add(Polyline(
       polylineId: PolylineId('route4'),
@@ -1167,6 +1157,17 @@ class _BusRoutePage extends State<BusRoutePage> {
       width: 6,
       points: roadCoordinatesRoute4, // Replace with Route 4 coordinates.
     ));
+
+    // Add bus stop markers with the resized icon
+    _busStopMarkersRoute5.addAll(busStopsRoute5.map((busStop) {
+      return Marker(
+        markerId: MarkerId(busStop.id),
+        position: busStop.position,
+        icon: customIcon, // Use the resized custom icon
+        infoWindow: InfoWindow(title: busStop.name),
+      );
+    }));
+
 
     // Initialize the polylines for Route 4 (purple).
     _polylines.add(Polyline(
@@ -1177,7 +1178,6 @@ class _BusRoutePage extends State<BusRoutePage> {
       // Replace with Route 4 coordinates.
     ));
 
-
     _pages = [
       // const Text('Bus Stops'),
       _buildBusStopsPage(), // Bus Stops Page
@@ -1187,6 +1187,7 @@ class _BusRoutePage extends State<BusRoutePage> {
       const Text('Messages'),
     ];
   }
+
 
   Widget _buildBusStopsPage() {
     List<Map<String, String>> manualBusStops = [
@@ -1243,7 +1244,6 @@ class _BusRoutePage extends State<BusRoutePage> {
     );
   }
 
-
   CameraPosition _getInitialCameraPosition() {
     switch (_selectedRoute) {
       case 1:
@@ -1276,6 +1276,7 @@ class _BusRoutePage extends State<BusRoutePage> {
       );
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -1312,39 +1313,39 @@ class _BusRoutePage extends State<BusRoutePage> {
       SidebarPageDriver(mainStatus: widget.mainStatus),
       body: Column(
         children: [
-          Expanded(
-            child: GoogleMap(
-              mapType: _isSatelliteView ? MapType.satellite : MapType.normal,
-              myLocationButtonEnabled: false,
-              zoomControlsEnabled: false,
-              markers: _selectedRoute == 1
-                  ? {..._route1BusStopMarkers, ..._getMyLocationMarker}
-                  : _selectedRoute == 2
-                  ? {..._route2BusStopMarkers, ..._getMyLocationMarker}
-                  : _selectedRoute == 3
-                  ? {..._route3BusStopMarkers, ..._getMyLocationMarker}
-                  : _selectedRoute == 4
-                  ? {..._route4BusStopMarkers, ..._getMyLocationMarker}
-                  : {..._route5BusStopMarkers, ..._getMyLocationMarker},
-              polylines: _polylines.where((polyline) {
-                if (_selectedRoute == 1) {
-                  return polyline.polylineId.value == 'route1';
-                } else if (_selectedRoute == 2) {
-                  return polyline.polylineId.value == 'route2';
-                } else if (_selectedRoute == 3) {
-                  return polyline.polylineId.value == 'route3';
-                } else if (_selectedRoute == 4) {
-                  return polyline.polylineId.value == 'route4';
-                } else {
-                  return polyline.polylineId.value == 'route5';
-                }
-              }).toSet(),
-              initialCameraPosition: _getInitialCameraPosition(),
-              onMapCreated: (GoogleMapController controller) {
-                _googleMapController = controller;
-              },
-            ),
-          ),
+      Expanded(
+      child: GoogleMap(
+      mapType: _isSatelliteView ? MapType.satellite : MapType.normal,
+        myLocationButtonEnabled: false,
+        zoomControlsEnabled: false,
+        markers: _selectedRoute == 1
+            ? {..._busStopMarkersRoute1, ..._getMyLocationMarker}
+            : _selectedRoute == 2
+            ? {..._busStopMarkersRoute2, ..._getMyLocationMarker}
+            : _selectedRoute == 3
+            ? {..._busStopMarkersRoute3, ..._getMyLocationMarker}
+            : _selectedRoute == 4
+            ? {..._busStopMarkersRoute4, ..._getMyLocationMarker}
+            : {..._busStopMarkersRoute5, ..._getMyLocationMarker},
+        polylines: _polylines.where((polyline) {
+          if (_selectedRoute == 1) {
+            return polyline.polylineId.value == 'route1';
+          } else if (_selectedRoute == 2) {
+            return polyline.polylineId.value == 'route2';
+          } else if (_selectedRoute == 3) {
+            return polyline.polylineId.value == 'route3';
+          } else if (_selectedRoute == 4) {
+            return polyline.polylineId.value == 'route4';
+          } else {
+            return polyline.polylineId.value == 'route5';
+          }
+        }).toSet(),
+        initialCameraPosition: _getInitialCameraPosition(),
+        onMapCreated: (GoogleMapController controller) {
+          _googleMapController = controller;
+        },
+      ),
+    ),
 
 
           Column(
@@ -1399,18 +1400,20 @@ class _BusRoutePage extends State<BusRoutePage> {
                   ),
                 );
 
+
+                final myLocationIcon = await getResizedMarkerIcon('assets/images/my-location.png', 80, 80);
+
                 setState(() {
                   _getMyLocationMarker.clear(); // Clear existing markers
                   _getMyLocationMarker.add(
                     Marker(
-                      markerId: MarkerId("user_location"),
+                      markerId: MarkerId("my_location"),
                       position: position,
-                      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+                      icon: myLocationIcon,
                     ),
                   );
                 });
               },
-
               child: Icon(Icons.my_location),
               backgroundColor: Colors.white, // Customize the color as needed
               mini: true,
@@ -1422,6 +1425,7 @@ class _BusRoutePage extends State<BusRoutePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
+
 
   Widget buildElevatedButton(int route, String buttonText, String iconAsset, String subtitle) {
     return ElevatedButton(
@@ -1494,7 +1498,24 @@ class _BusRoutePage extends State<BusRoutePage> {
       return Colors.white; // Default color when not selected
     }
   }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
