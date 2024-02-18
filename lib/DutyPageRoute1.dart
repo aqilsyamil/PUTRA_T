@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'BitMapDescriptor.dart';
-
+import 'package:geolocator/geolocator.dart';
 class BusStop {
   final String id;
   final String name;
@@ -33,6 +33,9 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
   String? selectedButton;
   bool _isSatelliteView = false;
   GoogleMapController? _googleMapController;
+
+  late Position _currentPosition;
+  bool _serviceEnabled = false;
 
   final List<BusStop> busStopsRoute1 = [
     BusStop(
@@ -170,6 +173,39 @@ class _DutyPageRoute1State extends State<DutyPageRoute1> {
   void initState() {
     super.initState();
     _initializeRouteData();
+    _checkLocationService();
+  }
+
+  Future<void> _checkLocationService() async {
+    _serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!_serviceEnabled) {
+      return;
+    }
+
+    _getCurrentLocation();
+  }
+
+  Future<void> _getCurrentLocation() async {
+    _currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    _updateLocationMarker(_currentPosition);
+  }
+
+  void _updateLocationMarker(Position position) {
+    // Remove previous marker if exists
+    _markers.removeWhere((marker) => marker.markerId.value == 'live_location');
+
+    // Add new marker with updated live location data
+    _markers.add(Marker(
+      markerId: MarkerId('live_location'),
+      position: LatLng(position.latitude, position.longitude),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue), // Customize marker icon if needed
+    ));
+
+    // Refresh map to reflect changes
+    if (mounted) {
+      setState(() {});
+    }
   }
   void _initializeRouteData() async {
     // Load and resize the bus stop icon

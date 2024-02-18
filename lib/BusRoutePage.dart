@@ -1097,7 +1097,7 @@ class _BusRoutePage extends State<BusRoutePage> {
     // Initialize the polylines for Route 1 (blue).
     _polylines.add(Polyline(
       polylineId: PolylineId('route1'),
-      color: Colors.blue,
+      color: Colors.blue.shade900,
       width: 6,
       points: roadCoordinatesRoute1,
     ));
@@ -1482,7 +1482,7 @@ class _BusRoutePage extends State<BusRoutePage> {
     if (_selectedRoute == route) {
       switch (route) {
         case 1:
-          return Colors.blue;
+          return Colors.blue.shade900;
         case 2:
           return Colors.green;
         case 3:
