@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'SidebarPage.dart'; // Ensure this import points to your actual SidebarPage file
+import 'SidebarPage.dart';
+import 'NavigationPageRoute1.dart';
 
 class NavigationPage extends StatefulWidget {
   final String initialEndLocation;
@@ -312,7 +313,10 @@ class NavigationPageState extends State<NavigationPage> {
                   children: overlappingRoutes.expand((route) => [
                     ElevatedButton(
                       onPressed: () {
-                        // Handle button press
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NavigationPageRoute1()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
